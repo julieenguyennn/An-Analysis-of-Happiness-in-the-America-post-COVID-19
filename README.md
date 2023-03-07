@@ -1,1 +1,2 @@
-# Paper3
+# Analysis of American happiness
+
