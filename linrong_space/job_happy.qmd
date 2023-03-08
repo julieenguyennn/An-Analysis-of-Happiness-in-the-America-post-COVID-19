@@ -1,0 +1,74 @@
+---
+title: "Test ground"
+format: pdf
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+#| echo: false
+library(tidyverse)
+library(ggplot2)
+library(haven)
+library(here)
+library(readxl)
+library(stringr)
+library(kableExtra)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+raw_data <- read_excel(here::here("inputs/job_happy/GSS.xlsx"))
+# Remove Inapplicable, Dont know, no answer, refused and skipped
+cleaned_data <- raw_data %>% 
+  filter(!str_detect(hrs1, '.i'), !str_detect(hrs1, '.n'), 
+         !str_detect(hrs1, '.d'), !str_detect(hrs1, '.s'),
+         !str_detect(rincome, '.i'), !str_detect(rincome, '.n'), 
+         !str_detect(rincome, '.d'), !str_detect(rincome, '.s'),
+         !str_detect(rincome, '.r'), !str_detect(happy, '.i'),
+         !str_detect(happy, '.n'), !str_detect(happy, '.d'),
+         !str_detect(happy, '.s'))
+cleaned_data$hrs1 <- as.numeric(cleaned_data$hrs1)
+
+```
+
+```{r}
+#| echo: false
+
+hrs_happy <- cleaned_data %>% 
+  group_by(happy) %>% 
+  summarize(Mean = mean(hrs1),
+            Sd = sd(hrs1),
+            Total_observed = n()) %>% ungroup()
+
+knitr::kable(hrs_happy)
+```
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 8
+income_happy <- cleaned_data %>% 
+  group_by(rincome) %>% 
+  count(happy)
+
+income_happy_table <- kbl(income_happy) %>%
+  collapse_rows(columns = 1:2, valign = "top")
+income_happy_table
+
+income_happy_graph <- income_happy %>% 
+  ggplot(.,aes(x = rincome, y = n, fill = happy)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+income_happy_graph
+
+
+```
