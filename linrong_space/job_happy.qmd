@@ -29,6 +29,7 @@ library(kableExtra)
 ```{r}
 #| echo: false
 #| warning: false
+
 raw_data <- read_excel(here::here("inputs/job_happy/GSS.xlsx"))
 # Remove Inapplicable, Dont know, no answer, refused and skipped
 cleaned_data <- raw_data %>% 
@@ -39,8 +40,22 @@ cleaned_data <- raw_data %>%
          !str_detect(rincome, '.r'), !str_detect(happy, '.i'),
          !str_detect(happy, '.n'), !str_detect(happy, '.d'),
          !str_detect(happy, '.s'))
+cleaned_data$rincome <- sub("-","TO",cleaned_data$rincome)
+cleaned_data$rincome <- sub("LT","LOWER THEN ",cleaned_data$rincome)
 cleaned_data$hrs1 <- as.numeric(cleaned_data$hrs1)
-
+cleaned_data$rincome <- factor(cleaned_data$rincome, 
+                             levels = c('LOWER THEN  $1000', 
+                                        '$1000 TO 2999', 
+                                        '$3000 TO 3999',
+                                        '$4000 TO 4999',
+                                        '$5000 TO 5999',
+                                        '$6000 TO 6999',
+                                        '$7000 TO 7999',
+                                        '$8000 TO 9999',
+                                        '$10000 TO 14999',
+                                        '$15000 TO 19999',
+                                        '$20000 TO 24999',
+                                        '$25000 OR MORE'))
 ```
 
 ```{r}
@@ -62,7 +77,6 @@ knitr::kable(hrs_happy)
 income_happy <- cleaned_data %>% 
   group_by(rincome) %>% 
   count(happy)
-
 income_happy_table <- kbl(income_happy) %>%
   collapse_rows(columns = 1:2, valign = "top")
 income_happy_table
