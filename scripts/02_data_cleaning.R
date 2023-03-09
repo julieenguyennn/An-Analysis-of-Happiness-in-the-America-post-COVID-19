@@ -24,10 +24,21 @@ cleaned_data <- raw_data %>%
     race == 3 ~ 'Other'
   ))
 
+# Happiness by age group
 by_age <- cleaned_data %>% 
   group_by(age) %>% 
   summarise(mean = mean(happy, na.rm = TRUE))
+by_age %>% ggplot(
+  
+)
 
+# Happiness by sex
 by_sex <- cleaned_data %>% 
   group_by(sex) %>% 
   summarise(mean = mean(happy, na.rm = TRUE))
+
+# Happiness by race
+by_race <- cleaned_data %>% 
+  group_by(race) %>% 
+  summarise(mean = mean(happy, na.rm = TRUE))
+
