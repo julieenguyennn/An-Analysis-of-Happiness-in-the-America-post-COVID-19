@@ -1,11 +1,12 @@
 library(tidyverse)
 library(readr)
-
-read.csv("inputs/data/raw_gss.csv")
+library(dplyr)
+library(kableExtra)
+library(vtable)
 
 # Clean and recode data
 cleaned_data <- raw_data %>% 
-  select(id, age, race, sex, happy) %>% 
+  select(age, race, sex, happy) %>% 
   arrange(age) %>% 
   mutate(age = case_when(
     age < 18 ~ '< 18',
@@ -24,18 +25,17 @@ cleaned_data <- raw_data %>%
     race == 3 ~ 'Other'
   ))
 
+# Variables of interest
+
 # Happiness by age group
 by_age <- cleaned_data %>% 
-  group_by(age) %>% 
-  summarise(mean = mean(happy, na.rm = TRUE))
-by_age %>% ggplot(
-  
-)
+  group_by(age)
+
 
 # Happiness by sex
 by_sex <- cleaned_data %>% 
   group_by(sex) %>% 
-  summarise(mean = mean(happy, na.rm = TRUE))
+by_sex %>% ggplot(aes(x= 'happy',  group=sex))
 
 # Happiness by race
 by_race <- cleaned_data %>% 
