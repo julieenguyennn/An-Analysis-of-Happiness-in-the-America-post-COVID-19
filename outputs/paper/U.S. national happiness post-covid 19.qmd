@@ -1,0 +1,52 @@
+---
+title: "U.S. national happiness post-covid"
+author: "Julie Nguyen, Missy Zhang, LinRong Li"
+date: "`r Sys.time()`"
+date-format: "D MMMM YYYY"
+format:
+  pdf:
+    documentclass: article
+    papersize: a4
+    geometry: margin = 1in
+    mainfont: "Garamond"
+    sansfont: "Garamond"
+thanks: 'Code and data are available at: '
+abstract: "add abstract"
+number-sections: true
+bibliography: reference.bib
+execute: 
+  message: false
+  warning: false
+  echo: false
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(opendatatoronto)
+library(dplyr)
+library(haven)
+library(janitor)
+library(tidyverse)
+library(knitr)
+library(RColorBrewer)
+library(kableExtra)
+```
+
+## Introduction
+
+## Data
+### Source
+
+### Methodology
+
+### Ethical Concerns & Limitations
+
+## Discussion
+
+## Conclusion
+
+## Reference
+
+## Appendix
+
