@@ -23,22 +23,55 @@ cleaned_data <- raw_data %>%
     race == 1 ~ 'White',
     race == 2 ~ 'Black',
     race == 3 ~ 'Other'
-  ))
+  )) %>% 
+  mutate(happy = case_when(
+    happy == 1 ~ 'Very Happy',
+    happy == 2 ~ 'Pretty Happy',
+    happy == 3 ~ 'Not Too Happy'
+  )) %>% 
+  filter(!is.na(happy))
 
 # Variables of interest
+sumtable()
+
+# Overall national happiness
+cleaned_data %>% ggplot(aes(happy)) +
+  geom_bar() +
+  theme_minimal() +
+  labs(x = "Level of Happiness",
+       y = "Number of Respondents",
+       title = "Overall national happiness")
 
 # Happiness by age group
-by_age <- cleaned_data %>% 
-  group_by(age)
-
+cleaned_data %>% group_by(age) %>% 
+  ggplot(aes(x=happy, fill=age)) +
+  geom_bar() +
+  facet_wrap(~age, scales ="free") +
+  theme_minimal() +
+  labs(x="Level of Happiness",
+       y="Number of Respondents",
+       title="Happiness by age")+
+  theme(legend.position = "none")
 
 # Happiness by sex
-by_sex <- cleaned_data %>% 
-  group_by(sex) %>% 
-by_sex %>% ggplot(aes(x= 'happy',  group=sex))
+cleaned_data %>% group_by(sex) %>% 
+  ggplot(aes(x=happy, fill=sex)) +
+  geom_bar() +
+  facet_wrap(~sex, scales ="free") +
+  theme_minimal() +
+  labs(x="Level of Happiness",
+       y="Number of Respondents",
+       title="Happiness by sex")+
+  theme(legend.position = "none")
+
 
 # Happiness by race
-by_race <- cleaned_data %>% 
-  group_by(race) %>% 
-  summarise(mean = mean(happy, na.rm = TRUE))
-
+cleaned_data %>% group_by(race) %>% 
+  ggplot(aes(x=happy, fill=race)) +
+  geom_bar() +
+  facet_wrap(~race, scales ="free") +
+  theme_minimal() +
+  labs(x="Level of Happiness",
+       y="Number of Respondents",
+       title="Happiness by race")+
+  theme(legend.position = "none")
