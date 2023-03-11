@@ -27,9 +27,9 @@ library(kableExtra)
 #| echo: false
 #| warning: false
 
-raw_data <- read_excel(here::here("inputs/job_happy/GSS.xlsx"))
+raw_data_job <- read_excel(here::here("inputs/job_happy/GSS.xlsx"))
 # Remove Inapplicable, Dont know, no answer, refused and skipped
-cleaned_data <- raw_data %>% 
+cleaned_data_job <- raw_data_job %>% 
   filter(!str_detect(hrs1, '.i'), !str_detect(hrs1, '.n'), 
          !str_detect(hrs1, '.d'), !str_detect(hrs1, '.s'),
          !str_detect(rincome, '.i'), !str_detect(rincome, '.n'), 
@@ -37,10 +37,10 @@ cleaned_data <- raw_data %>%
          !str_detect(rincome, '.r'), !str_detect(happy, '.i'),
          !str_detect(happy, '.n'), !str_detect(happy, '.d'),
          !str_detect(happy, '.s'))
-cleaned_data$rincome <- sub("-","TO",cleaned_data$rincome)
-cleaned_data$rincome <- sub("LT","LOWER THEN ",cleaned_data$rincome)
-cleaned_data$hrs1 <- as.numeric(cleaned_data$hrs1)
-cleaned_data$rincome <- factor(cleaned_data$rincome,
+cleaned_data_job$rincome <- sub("-","TO",cleaned_data_job$rincome)
+cleaned_data_job$rincome <- sub("LT","LOWER THEN ",cleaned_data_job$rincome)
+cleaned_data_job$hrs1 <- as.numeric(cleaned_data_job$hrs1)
+cleaned_data_job$rincome <- factor(cleaned_data_job$rincome,
                              levels = c('LOWER THEN  $1000',
                                         '$1000 TO 2999',
                                         '$3000 TO 3999',
@@ -58,7 +58,7 @@ cleaned_data$rincome <- factor(cleaned_data$rincome,
 ```{r}
 #| echo: false
 
-hrs_happy <- cleaned_data %>% 
+hrs_happy <- cleaned_data_job %>% 
   group_by(happy) %>% 
   summarize(Mean = mean(hrs1),
             Sd = sd(hrs1),
@@ -71,7 +71,7 @@ knitr::kable(hrs_happy)
 #| echo: false
 #| fig-width: 10
 #| fig-height: 8
-income_happy <- cleaned_data %>%
+income_happy <- cleaned_data_job %>%
   group_by(rincome) %>%
   count(happy) %>%
   ungroup()
@@ -93,7 +93,7 @@ income_happy_table
 #| echo: false
 #| fig-width: 20
 #| fig-height: 15
-cleaned_data  %>%  group_by(rincome) %>% 
+cleaned_data_job  %>%  group_by(rincome) %>% 
   ggplot(aes(x = happy, fill = rincome)) + 
   geom_bar() +
   facet_wrap(~rincome, scales = "free") +
