@@ -38,8 +38,8 @@ sumtable(var, title = 'U.S. happiness in 2021', out = 'kable', simple.kable = TR
 
 # Overall national happiness
 overall_hp <- cleaned_data %>% 
-  group_by(happy) %>% 
-  count(happy)
+  count(happy) %>% 
+  mutate(proportion = n/sum(n)*100)
 
 cleaned_data %>% ggplot(aes(happy)) +
   geom_bar() +
@@ -52,6 +52,7 @@ cleaned_data %>% ggplot(aes(happy)) +
 by_age <- cleaned_data %>% 
   group_by(age) %>% 
   count(happy)
+sumtable(by_age, title ="Happiness by age", out = 'kable', simple.kable = TRUE)
 
 count_age <- cleaned_data %>% 
   count(age) %>% 

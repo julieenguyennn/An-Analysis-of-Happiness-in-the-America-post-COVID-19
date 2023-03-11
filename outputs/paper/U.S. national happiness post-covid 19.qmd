@@ -34,6 +34,7 @@ library(ggplot2)
 library(here)
 library(readxl)
 library(stringr)
+library(labelled)
 
 raw_data <- haven::read_dta("../../inputs/data/gss2021.dta")
 raw_data_job <- read_excel(here::here("inputs/job_happy/GSS.xlsx"))
@@ -115,15 +116,21 @@ sumtable(var, title = 'U.S. happiness in 2021', out = 'kable', simple.kable = TR
 
 ### National Happiness
 
-In overall, the level of happiness in the United States in 2021 is "pretty happy". Among 4041 respondents, more than half (2308 respondents) reported that they feel happy, while 923 people were not happy and 783 people were extremely happy.
+In overall, the level of happiness in the United States in 2021 is "pretty happy". Among 4041 respondents, more than half (57.5%) reported that they feel happy, while 923 people were not happy and 783 people were extremely happy. [@overallhp]
 
 ```{r}
+#| label: overallhp
+#| fig-cap: "National Happiness"
+overall_hp <- cleaned_data %>% 
+  group_by(happy) %>% 
+  count(happy)
+overall_hp <- overall_hp %>% mutate(proportion = n/sum(n)*100)
+
 cleaned_data %>% ggplot(aes(happy)) +
   geom_bar() +
   theme_minimal() +
   labs(x = "Level of Happiness",
-       y = "Number of Respondents",
-       title = "Overall national happiness")
+       y = "Number of Respondents")
 ```
 
   In order to understand the context and trends, we look into the demographics such as age, sex, and race.
@@ -156,6 +163,7 @@ cleaned_data %>% group_by(sex) %>%
        title="Happiness by sex")+
   theme(legend.position = "none")
 ```
+
 
 ```{r}
 # Happiness by race
