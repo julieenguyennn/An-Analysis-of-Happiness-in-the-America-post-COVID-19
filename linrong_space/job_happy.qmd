@@ -6,14 +6,11 @@ editor: visual
 
 ## Quarto
 
-Quarto enables you to weave together content and executable code into a
-finished document. To learn more about Quarto see <https://quarto.org>.
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
 
 ## Running Code
 
-When you click the **Render** button a document will be generated that
-includes both content and the output of embedded code. You can embed
-code like this:
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
 #| echo: false
@@ -43,9 +40,9 @@ cleaned_data <- raw_data %>%
 cleaned_data$rincome <- sub("-","TO",cleaned_data$rincome)
 cleaned_data$rincome <- sub("LT","LOWER THEN ",cleaned_data$rincome)
 cleaned_data$hrs1 <- as.numeric(cleaned_data$hrs1)
-cleaned_data$rincome <- factor(cleaned_data$rincome, 
-                             levels = c('LOWER THEN  $1000', 
-                                        '$1000 TO 2999', 
+cleaned_data$rincome <- factor(cleaned_data$rincome,
+                             levels = c('LOWER THEN  $1000',
+                                        '$1000 TO 2999',
                                         '$3000 TO 3999',
                                         '$4000 TO 4999',
                                         '$5000 TO 5999',
@@ -74,18 +71,35 @@ knitr::kable(hrs_happy)
 #| echo: false
 #| fig-width: 10
 #| fig-height: 8
-income_happy <- cleaned_data %>% 
-  group_by(rincome) %>% 
-  count(happy)
+income_happy <- cleaned_data %>%
+  group_by(rincome) %>%
+  count(happy) %>%
+  ungroup()
+
 income_happy_table <- kbl(income_happy) %>%
   collapse_rows(columns = 1:2, valign = "top")
 income_happy_table
 
-income_happy_graph <- income_happy %>% 
-  ggplot(.,aes(x = rincome, y = n, fill = happy)) + 
-  geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
-income_happy_graph
+# income_happy_graph <- income_happy %>%
+#   ggplot(.,aes(x = rincome, y = n, fill = happy)) +
+#   geom_bar(stat = "identity") +
+#   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+# income_happy_graph
 
 
+```
+
+```{r}
+#| echo: false
+#| fig-width: 20
+#| fig-height: 15
+cleaned_data  %>%  group_by(rincome) %>% 
+  ggplot(aes(x = happy, fill = rincome)) + 
+  geom_bar() +
+  facet_wrap(~rincome, scales = "free") +
+  theme_minimal() + 
+  labs(x = "Level of Happiness of Respondent", 
+       y = "Number of Respondents",
+       title = "Relationship of Income Respondent and Happiness") + 
+  theme(legend.position = "none")
 ```
