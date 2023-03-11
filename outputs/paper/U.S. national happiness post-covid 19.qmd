@@ -66,6 +66,15 @@ cleaned_data <- raw_data %>%
 ## Data
 ### Source
 
+
+Variables
+```{r}
+var <- raw_data %>% 
+  select(age, sex)
+var$sex <- var$sex %>%  to_factor()
+sumtable(var, title = 'U.S. happiness in 2021', out = 'kable', simple.kable = TRUE)
+```
+
 ### Methodology
 
 ### Ethical Concerns & Limitations
@@ -82,7 +91,7 @@ cleaned_data %>% ggplot(aes(happy)) +
        y = "Number of Respondents",
        title = "Overall national happiness")
 ```
-  We also look into the demographics such as age, sex, and race.
+  In order to understand the context and trends, we look into the demographics such as age, sex, and race.
   Comparing happiness among different age groups, it is apparent that the level of happiness remained stable throughout the groups. While in 18 to 64 or non-identifiable age groups, there are more people feeling unhappy than extremely happy, from 65 and above age group witnesses the same proportion of people feeling not too happy and extremely happy. 
   
 ```{r}
