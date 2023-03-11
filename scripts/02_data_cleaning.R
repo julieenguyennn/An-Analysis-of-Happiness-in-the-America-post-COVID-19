@@ -32,9 +32,13 @@ cleaned_data <- raw_data %>%
   filter(!is.na(happy))
 
 # Variables of interest
-sumtable()
+sumtable(cleaned_data, title = "Overall Happiness", out = "kable")
 
 # Overall national happiness
+overall_hp <- cleaned_data %>% 
+  group_by(happy) %>% 
+  count(happy)
+
 cleaned_data %>% ggplot(aes(happy)) +
   geom_bar() +
   theme_minimal() +
@@ -43,6 +47,13 @@ cleaned_data %>% ggplot(aes(happy)) +
        title = "Overall national happiness")
 
 # Happiness by age group
+by_age <- cleaned_data %>% 
+  group_by(age) %>% 
+  count(happy)
+
+count_age <- cleaned_data %>% 
+  count(age)
+
 cleaned_data %>% group_by(age) %>% 
   ggplot(aes(x=happy, fill=age)) +
   geom_bar() +
@@ -54,6 +65,12 @@ cleaned_data %>% group_by(age) %>%
   theme(legend.position = "none")
 
 # Happiness by sex
+by_sex <- cleaned_data %>% 
+  group_by(sex) %>% 
+  count(happy)
+
+count_sex <- cleaned_data %>% 
+  count(sex)
 cleaned_data %>% group_by(sex) %>% 
   ggplot(aes(x=happy, fill=sex)) +
   geom_bar() +
@@ -66,6 +83,13 @@ cleaned_data %>% group_by(sex) %>%
 
 
 # Happiness by race
+by_race <- cleaned_data %>% 
+  group_by(race) %>% 
+  count(happy)
+
+count_race <- cleaned_data %>% 
+  count(race)
+
 cleaned_data %>% group_by(race) %>% 
   ggplot(aes(x=happy, fill=race)) +
   geom_bar() +

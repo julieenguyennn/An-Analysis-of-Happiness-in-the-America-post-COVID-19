@@ -13,7 +13,6 @@ format:
 thanks: 'Code and data are available at: '
 abstract: "add abstract"
 number-sections: true
-bibliography: reference.bib
 execute: 
   message: false
   warning: false
@@ -23,14 +22,43 @@ execute:
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
-library(opendatatoronto)
 library(dplyr)
 library(haven)
 library(janitor)
 library(tidyverse)
 library(knitr)
-library(RColorBrewer)
+library(vtable)
 library(kableExtra)
+library(readr)
+
+raw_data <- haven::read_dta("../../inputs/data/gss2021.dta")
+
+# Clean and recode data
+cleaned_data <- raw_data %>% 
+  select(age, race, sex, happy) %>% 
+  arrange(age) %>% 
+  mutate(age = case_when(
+    age < 18 ~ '< 18',
+    age >= 18 & age <= 34 ~ '18-34',
+    age >= 35 & age <=49 ~ '35-49',
+    age >= 50 & age <=64 ~ '50-64',
+    age >= 65 & age <=89 ~ '65 and above'
+  )) %>% 
+  mutate(sex = case_when(
+    sex == 1 ~ 'Male',
+    sex == 2 ~ 'Female'
+  )) %>% 
+  mutate(race = case_when(
+    race == 1 ~ 'White',
+    race == 2 ~ 'Black',
+    race == 3 ~ 'Other'
+  )) %>% 
+  mutate(happy = case_when(
+    happy == 1 ~ 'Very Happy',
+    happy == 2 ~ 'Pretty Happy',
+    happy == 3 ~ 'Not Too Happy'
+  )) %>% 
+  filter(!is.na(happy))
 ```
 
 ## Introduction
@@ -43,6 +71,60 @@ library(kableExtra)
 ### Ethical Concerns & Limitations
 
 ## Discussion
+### National Happiness
+  In overall, the level of happiness in the United States in 2021 is "pretty happy". Among 4041 respondents, more than half (2308 respondents) reported that they feel happy, while 923 people were not happy and 783 people were extremely happy.
+  
+```{r}
+cleaned_data %>% ggplot(aes(happy)) +
+  geom_bar() +
+  theme_minimal() +
+  labs(x = "Level of Happiness",
+       y = "Number of Respondents",
+       title = "Overall national happiness")
+```
+  We also look into the demographics such as age, sex, and race.
+  Comparing happiness among different age groups, it is apparent that the level of happiness remained stable throughout the groups. While in 18 to 64 or non-identifiable age groups, there are more people feeling unhappy than extremely happy, from 65 and above age group witnesses the same proportion of people feeling not too happy and extremely happy. 
+  
+```{r}
+# Happiness by age group
+cleaned_data %>% group_by(age) %>% 
+  ggplot(aes(x=happy, fill=age)) +
+  geom_bar() +
+  facet_wrap(~age, scales ="free") +
+  theme_minimal() +
+  labs(x="Level of Happiness",
+       y="Number of Respondents",
+       title="Happiness by age")+
+  theme(legend.position = "none")
+```
+  Looking at different sex groups, male tend to be more happy than female. 
+
+```{r}
+# Happiness by sex
+cleaned_data %>% group_by(sex) %>% 
+  ggplot(aes(x=happy, fill=sex)) +
+  geom_bar() +
+  facet_wrap(~sex, scales ="free") +
+  theme_minimal() +
+  labs(x="Level of Happiness",
+       y="Number of Respondents",
+       title="Happiness by sex")+
+  theme(legend.position = "none")
+```
+  
+```{r}
+# Happiness by race
+cleaned_data %>% group_by(race) %>% 
+  ggplot(aes(x=happy, fill=race)) +
+  geom_bar() +
+  facet_wrap(~race, scales ="free") +
+  theme_minimal() +
+  labs(x="Level of Happiness",
+       y="Number of Respondents",
+       title="Happiness by race")+
+  theme(legend.position = "none")
+```
+
 
 ## Conclusion
 
