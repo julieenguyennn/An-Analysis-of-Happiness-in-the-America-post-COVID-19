@@ -32,7 +32,9 @@ cleaned_data <- raw_data %>%
   filter(!is.na(happy))
 
 # Variables of interest
-sumtable(cleaned_data, title = "Overall Happiness", out = "kable")
+var <- cleaned_data %>% 
+  mutate('Age' = age, 'Sex' = sex, 'Race' = race, 'Happy' = happy)
+sumtable(var, title = 'U.S. happiness in 2021', out = 'kable', simple.kable = TRUE)
 
 # Overall national happiness
 overall_hp <- cleaned_data %>% 
@@ -52,7 +54,8 @@ by_age <- cleaned_data %>%
   count(happy)
 
 count_age <- cleaned_data %>% 
-  count(age)
+  count(age) %>% 
+  mutate(proportion = n/sum(n)*100)
 
 cleaned_data %>% group_by(age) %>% 
   ggplot(aes(x=happy, fill=age)) +
@@ -70,7 +73,9 @@ by_sex <- cleaned_data %>%
   count(happy)
 
 count_sex <- cleaned_data %>% 
-  count(sex)
+  count(sex) %>% 
+  mutate(proportion = n/sum(n)*100)
+
 cleaned_data %>% group_by(sex) %>% 
   ggplot(aes(x=happy, fill=sex)) +
   geom_bar() +
@@ -88,7 +93,8 @@ by_race <- cleaned_data %>%
   count(happy)
 
 count_race <- cleaned_data %>% 
-  count(race)
+  count(race) %>% 
+  mutate(proportion = n/sum(n)*100)
 
 cleaned_data %>% group_by(race) %>% 
   ggplot(aes(x=happy, fill=race)) +

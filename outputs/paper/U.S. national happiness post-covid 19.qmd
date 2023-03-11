@@ -1,6 +1,6 @@
 ---
 title: "U.S. national happiness post-covid"
-author: "Julie Nguyen, Missy Zhang, LinRong Li"
+author: "Julie Nguyen, Missy Zhang, Linrong Li"
 date: "`r Sys.time()`"
 date-format: "D MMMM YYYY"
 format:
@@ -30,8 +30,13 @@ library(knitr)
 library(vtable)
 library(kableExtra)
 library(readr)
+library(ggplot2)
+library(here)
+library(readxl)
+library(stringr)
 
 raw_data <- haven::read_dta("../../inputs/data/gss2021.dta")
+raw_data_job <- read_excel(here::here("inputs/job_happy/GSS.xlsx"))
 
 # Clean and recode data
 cleaned_data <- raw_data %>% 
@@ -59,21 +64,59 @@ cleaned_data <- raw_data %>%
     happy == 3 ~ 'Not Too Happy'
   )) %>% 
   filter(!is.na(happy))
+
+# Remove Inapplicable, Dont know, no answer, refused and skipped
+cleaned_data_job <- raw_data_job %>% 
+  filter(!str_detect(hrs1, '.i'), !str_detect(hrs1, '.n'), 
+         !str_detect(hrs1, '.d'), !str_detect(hrs1, '.s'),
+         !str_detect(rincome, '.i'), !str_detect(rincome, '.n'), 
+         !str_detect(rincome, '.d'), !str_detect(rincome, '.s'),
+         !str_detect(rincome, '.r'), !str_detect(happy, '.i'),
+         !str_detect(happy, '.n'), !str_detect(happy, '.d'),
+         !str_detect(happy, '.s'))
+cleaned_data_job$rincome <- sub("-","TO",cleaned_data_job$rincome)
+cleaned_data_job$rincome <- sub("LT","LOWER THEN ",cleaned_data_job$rincome)
+cleaned_data_job$hrs1 <- as.numeric(cleaned_data_job$hrs1)
+cleaned_data_job$rincome <- factor(cleaned_data_job$rincome,
+                             levels = c('LOWER THEN  $1000',
+                                        '$1000 TO 2999',
+                                        '$3000 TO 3999',
+                                        '$4000 TO 4999',
+                                        '$5000 TO 5999',
+                                        '$6000 TO 6999',
+                                        '$7000 TO 7999',
+                                        '$8000 TO 9999',
+                                        '$10000 TO 14999',
+                                        '$15000 TO 19999',
+                                        '$20000 TO 24999',
+                                        '$25000 OR MORE'))
 ```
 
 ## Introduction
 
 ## Data
+
 ### Source
+
+
+Variables
+```{r}
+var <- raw_data %>% 
+  select(age, sex)
+var$sex <- var$sex %>%  to_factor()
+sumtable(var, title = 'U.S. happiness in 2021', out = 'kable', simple.kable = TRUE)
+```
 
 ### Methodology
 
 ### Ethical Concerns & Limitations
 
 ## Discussion
+
 ### National Happiness
-  In overall, the level of happiness in the United States in 2021 is "pretty happy". Among 4041 respondents, more than half (2308 respondents) reported that they feel happy, while 923 people were not happy and 783 people were extremely happy.
-  
+
+In overall, the level of happiness in the United States in 2021 is "pretty happy". Among 4041 respondents, more than half (2308 respondents) reported that they feel happy, while 923 people were not happy and 783 people were extremely happy.
+
 ```{r}
 cleaned_data %>% ggplot(aes(happy)) +
   geom_bar() +
@@ -82,9 +125,10 @@ cleaned_data %>% ggplot(aes(happy)) +
        y = "Number of Respondents",
        title = "Overall national happiness")
 ```
-  We also look into the demographics such as age, sex, and race.
+
+  In order to understand the context and trends, we look into the demographics such as age, sex, and race.
   Comparing happiness among different age groups, it is apparent that the level of happiness remained stable throughout the groups. While in 18 to 64 or non-identifiable age groups, there are more people feeling unhappy than extremely happy, from 65 and above age group witnesses the same proportion of people feeling not too happy and extremely happy. 
-  
+
 ```{r}
 # Happiness by age group
 cleaned_data %>% group_by(age) %>% 
@@ -97,7 +141,8 @@ cleaned_data %>% group_by(age) %>%
        title="Happiness by age")+
   theme(legend.position = "none")
 ```
-  Looking at different sex groups, male tend to be more happy than female. 
+
+Looking at different sex groups, male tend to be more happy than female.
 
 ```{r}
 # Happiness by sex
@@ -111,7 +156,7 @@ cleaned_data %>% group_by(sex) %>%
        title="Happiness by sex")+
   theme(legend.position = "none")
 ```
-  
+
 ```{r}
 # Happiness by race
 cleaned_data %>% group_by(race) %>% 
@@ -125,10 +170,62 @@ cleaned_data %>% group_by(race) %>%
   theme(legend.position = "none")
 ```
 
+Besides we looked into how job conditions may affect the level of happiness.
+
+Firstly, we looked at the hours the respondent worked in the last week from they responded to the survey.
+
+```{r}
+#| echo: false
+#| label: tbl-hour
+#| tbl-cap: The means of hours worked last week in different levels of happiness
+hrs_happy <- cleaned_data_job %>% 
+  group_by(happy) %>% 
+  summarize(Mean = mean(hrs1),
+            Sd = sd(hrs1),
+            Total_observed = n()) %>% ungroup()
+
+knitr::kable(hrs_happy)
+```
+
+Then, we looked at how people in different income group rated their levels of happiness.
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 8
+#| label: tbl-income
+#| tbl-cap: The level of happiness in different income groups
+income_happy <- cleaned_data_job %>%
+  group_by(rincome) %>%
+  count(happy) %>%
+  ungroup()
+
+income_happy_table <- kbl(income_happy) %>%
+  collapse_rows(columns = 1:2, valign = "top")
+income_happy_table
+```
+
+To better visualize the results and find the tendency, we plotted a graph.
+
+```{r}
+#| echo: false
+#| fig-width: 20
+#| fig-height: 15
+#| label: fig-income
+#| fig-cap: Relationship of income level and happiness
+cleaned_data_job  %>%  group_by(rincome) %>% 
+  ggplot(aes(x = happy, fill = rincome)) + 
+  geom_bar() +
+  facet_wrap(~rincome, scales = "free") +
+  theme_minimal() + 
+  labs(x = "Level of Happiness of Respondent", 
+       y = "Number of Respondents",
+       title = "Relationship of Income Respondent and Happiness") + 
+  theme(legend.position = "none")
+```
 
 ## Conclusion
 
 ## Reference
 
 ## Appendix
-
