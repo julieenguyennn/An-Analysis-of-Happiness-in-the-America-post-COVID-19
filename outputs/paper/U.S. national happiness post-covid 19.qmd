@@ -59,6 +59,11 @@ cleaned_data <- raw_data %>%
     race == 2 ~ 'Black',
     race == 3 ~ 'Other'
   )) %>% 
+  mutate(happy = case_when(
+    happy == 1 ~ 'Very Happy',
+    happy == 2 ~ 'Pretty Happy',
+    happy == 3 ~ 'Not Too Happy'
+  )) %>% 
   filter(!is.na(happy))
 
 # Remove Inapplicable, Dont know, no answer, refused and skipped
@@ -122,26 +127,32 @@ overall_hp <- cleaned_data %>%
   count(happy)
 overall_hp <- overall_hp %>% mutate(proportion = n/sum(n)*100)
 
-cleaned_data %>% ggplot(aes(happy)) +
+cleaned_data %>% ggplot(aes(happy, fill = happy)) +
   geom_bar() +
   theme_minimal() +
   labs(x = "Level of Happiness",
-       y = "Number of Respondents")
+       y = "Number of Respondents",
+       fill = "Level of Happiness")
 ```
 ### Happiness among age groups
-  Comparing happiness among different age groups, it is apparent that the level of happiness remained stable throughout the groups. While in 18 to 64 or non-identifiable age groups, there are more people feeling unhappy than extremely happy, from 65 and above age group witnesses the same proportion of people feeling not too happy and extremely happy.
+  Comparing happiness among different age groups, it is apparent that the level of happiness remained stable throughout the groups. While in 18 to 64 and non-identifiable age groups, there are more people feeling unhappy than extremely happy, from 65 and above age group witnesses the same proportion of people feeling not too happy and extremely happy. In the 18-34 age group, there are 189 respondents (25.9%) reported to feel extremely happy, while that of 35-49, 50-64, and 65 and above age group take up 22.9%, 23.5%, and 21% respectively.
 
 ```{r, fig.pos="H"}
+#| label: fig-age
+#| fig-cap: "Happiness by age"
+#| 
 # Happiness by age group
-cleaned_data %>% group_by(age) %>% 
-  ggplot(aes(x=happy, fill=age)) +
-  geom_bar() +
-  facet_wrap(~age, scales ="free") +
+by_age <- cleaned_data %>% 
+  group_by(age) %>% 
+  count(happy) 
+
+by_age %>% 
+  ggplot(aes(x=age, y = n, fill=happy)) +
+  geom_bar(stat = "identity", position = "dodge") +
   theme_minimal() +
-  labs(x="Level of Happiness",
-       y="Number of Respondents",
-       title="Happiness by age")+
-  theme(legend.position = "none")
+  labs(x="Age Groups",
+       y="Number of Respondents")+
+  theme(legend.position = "right")
 ```
 
 ### Happiness among male, female, and others 
@@ -153,15 +164,17 @@ cleaned_data %>% group_by(age) %>%
 #| fig-cap: "Happiness by sex in 2021"
 
 # Happiness by sex
-cleaned_data %>% group_by(sex) %>% 
-  ggplot(aes(x=happy, fill=sex)) +
-  geom_bar() +
-  facet_wrap(~sex, scales ="free") +
+by_sex <- cleaned_data %>% 
+  group_by(sex) %>% 
+  count(happy) 
+
+by_sex %>% 
+  ggplot(aes(x=sex, y = n, fill=happy)) +
+  geom_bar(stat = "identity", position = "dodge") +
   theme_minimal() +
-  labs(x="Level of Happiness",
-       y="Number of Respondents",
-       title="Happiness by sex")+
-  theme(legend.position = "none")
+  labs(x="Sex Groups",
+       y="Number of Respondents")+
+  theme(legend.position = "right")
 ```
 ### Happiness among different races
   As a multicultural country, happiness in different races is also worth observing as it shows the level of happiness in different racial communities. From @fig-race We notice that there is a similar pattern between the black and white racial groups, and between other races and non-identifiable group.
@@ -171,14 +184,17 @@ cleaned_data %>% group_by(sex) %>%
 #| fig-cap: "Happiness by race"
 
 # Happiness by race
-cleaned_data %>% group_by(race) %>% 
-  ggplot(aes(x=happy, fill=race)) +
-  geom_bar() +
-  facet_wrap(~race, scales ="free") +
+by_race <- cleaned_data %>% 
+  group_by(race) %>% 
+  count(happy) 
+
+by_race %>% 
+  ggplot(aes(x=race, y = n, fill=happy)) +
+  geom_bar(stat = "identity", position = "dodge") +
   theme_minimal() +
-  labs(x="Level of Happiness",
+  labs(x="Racial Groups",
        y="Number of Respondents")+
-  theme(legend.position = "none")
+  theme(legend.position = "right")
 ```
 ### Happiness and job conditions
 Besides we looked into how job conditions may affect the level of happiness.

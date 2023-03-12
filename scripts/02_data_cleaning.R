@@ -24,11 +24,6 @@ cleaned_data <- raw_data %>%
     race == 2 ~ 'Black',
     race == 3 ~ 'Other'
   )) %>% 
-  mutate(happy = case_when(
-    happy == 1 ~ 'Very Happy',
-    happy == 2 ~ 'Pretty Happy',
-    happy == 3 ~ 'Not Too Happy'
-  )) %>% 
   filter(!is.na(happy))
 
 # Variables of interest
