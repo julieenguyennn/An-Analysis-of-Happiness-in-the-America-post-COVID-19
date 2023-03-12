@@ -112,19 +112,6 @@ To get better insights on what factors affect happiness, we utilized the 2021 US
 The survey of interest in this report is the General Social Survey [@norc], one that monitors pubic opinion and behavior in the United States. It has been conducted since 1972 by the NORC at the University of Chicago and funded by the National Science Foundation(NSF); aiming to minimize all changes via retaining similar sampling and questioning approaches.
 In each round, the GSS contains a set of repeating modules and a section of topical modules that is subject to change in every round and each participant will be given a subset of repeating modules and topical modules (it may not contain all modules).
 
-
-
-
-
-
-Variables [what is this and why is it here?]
-```{r}
-var <- raw_data %>% 
-  select(age, sex)
-var$sex <- var$sex %>%  to_factor()
-sumtable(var, title = 'U.S. happiness in 2021', out = 'kable', simple.kable = TRUE)
-```
-
 ### Methodology
 
 Since its inception, the GSS has traditionally used in-person data collection as its primary mode of data collection. However, to safeguard the health of staff and respondents during the COVID-19 pandemic, the 2021 GSS data collection used a mail-to-web methodology (supplemented with phone for respondents who needed the option) instead of its traditional in-person interviews. 
@@ -141,12 +128,15 @@ The GSS collects data on contemporary American society to monitor and explain tr
 
 ### Variable Selection
 
+06 variables were selected to conduct analysis for the report including respondents' age, sex, race, working hours, and income. We first viewed the relationship of happiness towards different age, sex, racial groups to investigate the national trend of happiness in the year 2021. Other variables are used to explore the relationship and their impact on happiness. For our study, alongside the comprehension of happiness nationwide in the year 2021, we wanted to focus on how work-related factors impact the population's happiness.
+
+Happiness was measured using the survey asking respondents how happy they feel.  
 
 ### Strengths and Weaknesses
 
 ### Ethical Concerns & Limitations
 
-[what is estimand and where to put it?]
+- Omit the NA answers in happiness
 
 ## Discussion
   In order to understand the context and trends, we observed the overall trend of happiness of the U.S. population in 2021. We also looked into the distribution of happiness among different age groups, sex groups, and racial groups.
