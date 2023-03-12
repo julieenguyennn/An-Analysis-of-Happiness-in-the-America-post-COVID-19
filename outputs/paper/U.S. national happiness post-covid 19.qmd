@@ -12,6 +12,7 @@ format:
     sansfont: "Garamond"
 thanks: 'Code and data are available at: '
 abstract: "add abstract"
+bibliography: reference.bib
 number-sections: true
 execute: 
   message: false
@@ -95,12 +96,28 @@ cleaned_data_job$rincome <- factor(cleaned_data_job$rincome,
 
 ## Introduction
 
+Human beings strive for different things in life, but the ultimate goal is usually to achieve happiness. Happiness can be seen as a measure of life quality, and it is often associated with factors such as income, education, social interactions, and family. The relationship between happiness and age has been widely studied, and research suggests that there is not much change in happiness until around the age of 55, after which happiness starts to increase, peaking around 67, with a quite sharp decline around the age of 75 [@citeage]. Studies examining the relationship between gender and happiness have found that individuals in the United States were more than twice as likely to experience well-being in states with high gender equality scores compared to states with low gender equality scores [@citesex]. The relationship between race and happiness has also been studied, with research suggesting that the gap in happiness between whites and blacks is substantial, with whites more likely to report being very happy and less likely to report being not too happy [@citerace]. Several studies conducted in Europe suggest that working fewer hours is correlated with higher life satisfaction [@citehours]. Regarding income, studies have shown that the relationship between perceived sufficient income and happiness is mediated by perceived health. Individuals with sufficient income are more likely to have better perceived health, which leads to increased happiness [@citeincome]. 
+
+This paper delves into the complex relationship between age, gender, race, working hours, and income, and their impact on an individual's overall happiness. The findings reveal that while the level of happiness among various age groups remains stable, the 18-34 age group reported the highest level of extreme happiness. Additionally, the study suggests that male respondents tend to report higher levels of happiness compared to their female counterparts, whereas the level of happiness remains similar across different racial groups. [insert something here]
+
+The remainder of the paper is split into five sections. Section 2 explains the data source and collection methodology, key features, our selected data’s characteristics, strengths and weakness, as well as potential ethics issues. Section 3 discusses the methods used to produce the wanted results to investigate the relationship between happiness and the various factors. Section 4 presents the findings from our methodology.
+
+
 ## Data
 
-### Source
+### Data Source and Collection
+
+To get better insights on what factors affect happiness, we utilized the 2021 US General Social Survey [@norc] from NORC. The raw dataset is a Stata file and was imported in R using the package Haven [@haven]. It includes data from 568 survey questions for 4,032 survey participants. Using the R [@citeR] package tidyverse [@tidyverse] and dplyr [@dplyr], we were able to clean and perform exploratory data analysis on the dataset to get insights into the data. Further, we used R package ggplot2 [@citeggplot2], Knitr [@knitr] and KableExtra [@kbextra] to visualize the data for this paper. 
+
+The survey of interest in this report is the General Social Survey [@norc], one that monitors pubic opinion and behavior in the United States. It has been conducted since 1972 by the NORC at the University of Chicago and funded by the National Science Foundation(NSF); aiming to minimize all changes via retaining similar sampling and questioning approaches.
+In each round, the GSS contains a set of repeating modules and a section of topical modules that is subject to change in every round and each participant will be given a subset of repeating modules and topical modules (it may not contain all modules).
 
 
-Variables
+
+
+
+
+Variables [what is this and why is it here?]
 ```{r}
 var <- raw_data %>% 
   select(age, sex)
@@ -110,7 +127,26 @@ sumtable(var, title = 'U.S. happiness in 2021', out = 'kable', simple.kable = TR
 
 ### Methodology
 
+Since its inception, the GSS has traditionally used in-person data collection as its primary mode of data collection. However, to safeguard the health of staff and respondents during the COVID-19 pandemic, the 2021 GSS data collection used a mail-to-web methodology (supplemented with phone for respondents who needed the option) instead of its traditional in-person interviews. 
+
+Outreach was conducted via mail and phone using commercially available phone number matches for addresses in the sample or inbound phone contact. GSS staff redesigned the mail-based outreach to respondents to introduce the GSS to fresh address-based sample and encourage them to participate, either by web or over the phone. Throughout the data collection period, selected households were sent postcards, invitation packets, and reminder letters using a combination of USPS and FedEx and urging them to complete the 2021 GSS survey. The sample was released in three batches, with evaluation of respondent recruitment protocol for each batch allowing the fine-tuning of protocol for subsequent batches.
+
+With a response rate of 17.4%, a total of 4,032 surveys were completed; from December 1, 2020, to May 3, 2021. 88.3% of those respondents completed the survey via the web, and 11.7% completed it via the phone.
+
+
+
+### Key Features
+
+The GSS collects data on contemporary American society to monitor and explain trends in opinions, attitudes, and behaviors. The GSS contains a standard core of demographic, behavioral, and attitudinal questions, plus topics of special interest. Among the topics covered are civil liberties, crime and violence, intergroup tolerance, morality, national spending priorities, psychological well-being, social mobility, and stress and traumatic events. The survey data has 4,032 respondents and counts 735 variables.
+
+### Variable Selection
+
+
+### Strengths and Weaknesses
+
 ### Ethical Concerns & Limitations
+
+[what is estimand and where to put it?]
 
 ## Discussion
   In order to understand the context and trends, we observed the overall trend of happiness of the U.S. population in 2021. We also looked into the distribution of happiness among different age groups, sex groups, and racial groups.
@@ -253,6 +289,10 @@ cleaned_data_job  %>%  group_by(rincome) %>%
 
 ## Conclusion
 
-## Reference
+
 
 ## Appendix
+
+\newpage
+
+## References

@@ -21,14 +21,13 @@ n <- 50
 # create a data frame with simulated variables
 gss_sim <- tibble(
   id = 1:n,
-  sex = sample(c("Male", "Female"), n, replace = TRUE),
+  gender = sample(c("Male", "Female", "Non-binary", "Genderqueer", "Agender"), n, replace = TRUE),
   age = sample(18:99, n, replace = TRUE),
   race = sample(c("White", "Black", "Hispanic", "Asian"), n, replace = TRUE),
-  education = sample(c("High school", "College degree", "Undergraduate degree", "Graduate degree or higher"), n, replace = TRUE),
-  happiness = sample(1:5, n, replace = TRUE),
+  working_hours = sample(c(15:50), n, replace = TRUE),
   income = sample(10000:200000, n, replace = TRUE),
-  religion = sample(c("Protestant", "Catholic", "Jewish", "None"), n, replace = TRUE)
-)
+  happiness = sample(1:5, n, replace = TRUE)
+  )
 
 #### Test the simulated data ####
 
@@ -37,17 +36,14 @@ gss_sim$happiness |> min() >= 1
 gss_sim$happiness |> max() <= 5
 gss_sim$happiness |> class()  == "integer"
 
-# Check if the education variable only contains the specified categories
-gss_sim$education |>
-  unique() == c( 
-    "High school", 
-    "College degree", 
-    "Undergraduate degree", 
-    "Graduate degree or higher"
-    )
+# Check if the gender variable only contains the specified categories
 
-gss_sim$education|>
+gss_sim$gender |>
+  unique() == c( 
+    "Male", "Female", "Non-binary", "Genderqueer", "Agender")
+
+gss_sim$gender|>
   unique() |>
-  length() == 4
+  length() == 5
 
 

@@ -11,5 +11,5 @@
 library(haven)
 library(tidyverse)
 # Read in the raw data. 
-raw_data <- haven::read_dta("../../inputs/data/gss2021.dta")
-write_csv(raw_data, "../../inputs/data/raw_gss.csv")
+raw_data <- haven::read_dta("inputs/data/gss2021.dta")
+write_csv(raw_data, "inputs/data/raw_gss.csv")
