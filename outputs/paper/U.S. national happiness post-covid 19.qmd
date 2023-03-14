@@ -132,8 +132,7 @@ The GSS collects data on contemporary American society to monitor and explain tr
 
 The age variables "inapplicable", "no answer", "do not know". 
 
-The participant's sex was measured as "male" and "female" with a small percentage of "Not Applicable" and "No answer". 
-For Race
+The participant's sex was measured as "male" and "female" with a small percentage (2.2%) of "Not Applicable" and "No answer". For Race
 Income of the respondent is also taken into account as we believe that it is an important factor in examining the happiness trend in overall and also act as a potential motive for happiness. 
 Working hours
 
