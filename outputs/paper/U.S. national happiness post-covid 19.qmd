@@ -261,7 +261,7 @@ by_race %>%
 
 ### Happiness and working hours
 
-Table 1 shows the mean and standard deviation of working hours in
+@tbl-hour shows the mean and standard deviation of working hours in
 different happiness level, as well as the total number of observation of
 each happiness level. Though the mean of working hours for the very
 happy group was slightly lower than the rest, there are no significant
@@ -287,40 +287,12 @@ knitr::kable(hrs_happy)
 
 ### Happiness and income level
 
-@fig-income and @tbl-income present the levels of happiness across
-different income groups. @tbl-income provides a breakdown of the total
-number of people in each income group who reported being in different
-levels of happiness. @fig-income visualizes these results and shows a
+@fig-income presents the levels of happiness across different income groups. @tbl-income provides a breakdown of the total number of people in each income group who reported being in different levels of happiness. @fig-income visualizes these results and shows a
 clear trend.
 
-The data shows that, for most income groups, the highest number of
-respondents reported feeling "pretty happy" compared to the other two
-happiness levels. However, there were some exceptions. For individuals
-earning less than \$1000, their reported happiness levels tended to be
-more polarized towards "not so happy" and "very happy". Moreover, for
-those earning between \$6000 and \$6999, the majority reported being
-"very happy".
+The data shows that, for most income groups, the highest number of respondents reported feeling "pretty happy" compared to the other two happiness levels. However, there were some exceptions. For individuals earning less than \$1000, their reported happiness levels tended to be more polarized towards "not so happy" and "very happy". Moreover, for those earning between \$6000 and \$6999, the majority reported being "very happy".
 
-Overall, the data suggests that, across income groups, respondents
-tended towards the "not so happy" level of happiness. However, it's
-worth noting that there were variations in happiness levels across
-different income groups.
-
-```{r, fig.pos="H"}
-#| echo: false
-#| fig-width: 10
-#| fig-height: 8
-#| label: tbl-income
-#| tbl-cap: The level of happiness in different income groups
-income_happy <- cleaned_data_job %>%
-  group_by(rincome) %>%
-  count(happy) %>%
-  ungroup()
-
-income_happy_table <- kbl(income_happy) %>%
-  collapse_rows(columns = 1:2, valign = "top")
-income_happy_table
-```
+Overall, the data suggests that, across income groups, respondents tended towards the "not so happy" level of happiness. However, it's worth noting that there were variations in happiness levels across different income groups.
 
 ```{r, fig.pos="H"}
 #| echo: false
