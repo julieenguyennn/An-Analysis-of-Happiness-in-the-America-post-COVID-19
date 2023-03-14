@@ -175,14 +175,7 @@ cleaned_data %>% ggplot(aes(happy, fill = happy)) +
 
 ### Happiness among age groups
 
-Comparing happiness among different age groups, it is apparent that the
-level of happiness remained stable throughout the groups (@fig-age).
-While in 18 to 64 and non-identifiable age groups, there are more people
-feeling unhappy than very happy, from 65 and above age group witnesses
-the same proportion of people feeling not too happy and very happy. In
-the 18-34 age group, there are 189 respondents (25.9%) reported to feel
-very happy, while that of 35-49, 50-64, and 65 and above age group take
-up 22.9%, 23.5%, and 21% respectively.
+Comparing happiness among different age groups, it is apparent that the level of happiness remained stable throughout the groups (@fig-age). While in 18 to 64 and non-identifiable age groups, there are more people feeling unhappy than very happy, from 65 and above age group witnesses the same proportion of people feeling not too happy and very happy. In the 18-34 age group, there are 189 respondents (25.9%) reported to feel very happy, while that of 35-49, 50-64, and 65 and above age group take up 22.9%, 23.5%, and 21% respectively.
 
 ```{r, fig.pos="H"}
 #| label: fig-age
@@ -204,16 +197,7 @@ by_age %>%
 
 ### Happiness among male, female, and others
 
-@fig-bysex shows that male tend to be more happy than female \[more
-elaboration is needed here about why male are more happy than female\].
-In the year 2021, the U.S. population reported to relatively happy among
-different sex groups. There is a great disparity between female
-respondents feeling unhappy and very happy - more female experienced
-unhappiness than very happy, while that of male respondents is quite
-similar. In addition, there are 92 people who responded their level of
-happiness without identifying their sex. In this group, there are 62
-respondents feel happy, 18 respondents feel very happy, and 12
-respondents feel unhappy.
+@fig-bysex shows that male tend to be more happy than female \[more elaboration is needed here about why male are more happy than female\]. In the year 2021, the U.S. population reported to relatively happy among different sex groups. There is a great disparity between female respondents feeling unhappy and very happy - more female experienced unhappiness than very happy, while that of male respondents is quite similar. In addition, there are 92 people who responded their level of happiness without identifying their sex. In this group, there are 62 respondents feel happy, 18 respondents feel very happy, and 12 respondents feel unhappy.
 
 ```{r, fig.pos="H"}
 #| label: fig-bysex
@@ -235,11 +219,7 @@ by_sex %>%
 
 ### Happiness among different races
 
-As a multicultural country, happiness in different races is also worth
-observing as it shows the level of happiness in different racial
-communities. From @fig-race We notice that there is a similar pattern
-between the black and white racial groups, and between other races and
-non-identifiable group. \[which is?\]
+As a multicultural country, happiness in different races is also worth observing as it shows the level of happiness in different racial communities. From @fig-race We notice that there is a similar pattern between the black and white racial groups, and between other races and non-identifiable group. \[which is?\]
 
 ```{r, fig.pos="H"}
 #| label: fig-race
