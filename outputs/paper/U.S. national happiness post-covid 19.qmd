@@ -131,9 +131,9 @@ The GSS collects data on contemporary American society to monitor and explain tr
 06 variables were selected to conduct analysis for the report including respondents' age, sex, race, working hours, and income. We first viewed the relationship of happiness towards different age, sex, racial groups to investigate the national trend of happiness in the year 2021. Other variables are used to explore the relationship and their impact on happiness. For our study, alongside the comprehension of happiness nationwide in the year 2021, we wanted to focus on how work-related factors impact the population's happiness. 
 
 The age variables "inapplicable", "no answer", "do not know" 
-Sex
-Race
-Income
+The sex variable was measured as factor, for "1" as male and "2" as female. 
+For Race
+Income of the respondent is also taken into account as we believe that it is an important factor in examining the happiness trend in overall and also act as a potential motive for happiness. 
 Working hours
 
 Happiness was self-measured by the respondents using the survey asking how happy they felt. It is scaled as "not too happy", "pretty happy", "very happy". Two people responded as either did not know or left blank.
