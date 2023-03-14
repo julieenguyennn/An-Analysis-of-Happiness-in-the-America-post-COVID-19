@@ -261,18 +261,9 @@ by_race %>%
 
 ### Happiness and working hours
 
-@tbl-hour shows the mean and standard deviation of working hours in
-different happiness level, as well as the total number of observation of
-each happiness level. Though the mean of working hours for the very
-happy group was slightly lower than the rest, there are no significant
-difference between different happy levels. In addition, it can be told
-from the standard deviation that the variability of working hours for
-the three groups are similar. However, it can be found that from people
-responded to all three questions (happiness, working hours and income
-level), the population of pretty happy group takes the majority of total
-number of observations.
+@tbl-hour shows the mean and standard deviation of working hours in different happiness level, as well as the total number of observation of each happiness level. Though the mean of working hours for the very happy group was slightly lower than the rest, there are no significant difference between different happy levels. In addition, it can be told from the standard deviation that the variability of working hours for the three groups are similar. However, it can be found that from people responded to all three questions (happiness, working hours and income level), the population of pretty happy group takes the majority of total number of observations.
 
-```{r, fig.pos="H"}
+```{r, tbl.pos="H"}
 #| echo: false
 #| label: tbl-hour
 #| tbl-cap: The means of hours worked last week in different levels of happiness
