@@ -241,7 +241,7 @@ communities. From @fig-race We notice that there is a similar pattern
 between the black and white racial groups, and between other races and
 non-identifiable group. \[which is?\]
 
-```{r}
+```{r, fig.pos="H"}
 #| label: fig-race
 #| fig-cap: "Happiness by race"
 
@@ -272,7 +272,7 @@ responded to all three questions (happiness, working hours and income
 level), the population of pretty happy group takes the majority of total
 number of observations.
 
-```{r}
+```{r, fig.pos="H"}
 #| echo: false
 #| label: tbl-hour
 #| tbl-cap: The means of hours worked last week in different levels of happiness
@@ -306,7 +306,7 @@ tended towards the "not so happy" level of happiness. However, it's
 worth noting that there were variations in happiness levels across
 different income groups.
 
-```{r}
+```{r, fig.pos="H"}
 #| echo: false
 #| fig-width: 10
 #| fig-height: 8
@@ -322,7 +322,7 @@ income_happy_table <- kbl(income_happy) %>%
 income_happy_table
 ```
 
-```{r}
+```{r, fig.pos="H"}
 #| echo: false
 #| fig-width: 20
 #| fig-height: 15
