@@ -140,10 +140,10 @@ Working hours refer to the hours the respondent had worked the week before they 
 
 ### Ethical Concerns & Limitations
 
-The 2021 US General Social Survey has a few issues that should be considered. Non-sampling errors.
+The 2021 US General Social Survey has a few issues that should be considered. Since this is a voluntary survey, the appearance of non-sampling errors is inevitable. The type of non-sampling errors in the survey mostly falls into non-response error, where respondents left the answer blank or provide incomplete answers.
 
-There are also factors that shou
-
+There are also factors that should
+The lack of options for race. -> Ethics
 
 
 ## Discussion
