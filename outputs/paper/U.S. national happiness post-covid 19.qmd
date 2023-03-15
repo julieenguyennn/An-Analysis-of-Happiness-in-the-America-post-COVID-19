@@ -11,7 +11,7 @@ format:
     mainfont: "Garamond"
     sansfont: "Garamond"
 thanks: 'Code and data are available at: '
-abstract: "add abstract"
+abstract: "This study investigates the level of happiness in the U.S. in 2021 and explores potential factors that may influence it. Using data from the 2021 US General Social Survey, we conducted a thorough analysis and found that the overall level of happiness in the U.S. is relatively high, albeit with slight variations under different conditions. Our study also includes an updated version of the survey in the Appendix to further discover our points of interest. By researching the happiness level in the U.S. and its potential determinants, our research contributes to a deeper understanding of the psychological and social well-being of Americans in 2021."
 bibliography: reference.bib
 number-sections: true
 execute: 
@@ -238,7 +238,11 @@ by_race %>%
 
 ### Happiness and working hours
 
+<<<<<<< HEAD
 @tbl-hour shows the mean and standard deviation of working hours in different happiness level, as well as the total number of observation of each happiness level. Though the mean of working hours for the very happy group was slightly lower than the rest, there are no significant difference between different happy levels. In addition, it can be told from the standard deviation that the variability of working hours for the three groups are similar. However, it can be found that from people responded to all three questions (happiness, working hours and income level), the population of pretty happy group takes the majority of total number of observations.
+=======
+Table 1 shows the mean and standard deviation of working hours in different happiness level, as well as the number of respondents of each happiness level. Though the mean of working hours for the very happy group was slightly lower than the rest, the mean hours of people working in the week before they responded to the survey are similar in all levels of happiness, at around 40 hours per week. In addition, it can be told from the standard deviation that the variabilities of working hours for the three groups are similar. Interestingly, the "pretty happy" group had the largest number of observations among those who responded to all three questions (happiness, working hours, and income level).
+>>>>>>> 90d44f6 (Update on paper)
 
 ```{r, tbl.pos="H"}
 #| echo: false
@@ -250,19 +254,32 @@ hrs_happy <- cleaned_data_job %>%
             Sd = sd(hrs1),
             Total_observed = n()) %>% ungroup()
 
+<<<<<<< HEAD
 knitr::kable(hrs_happy)
+=======
+knitr::kable(hrs_happy,
+             col.names = c("Happiness level", "Mean (hrs)", "Standard Deviation (hrs)", "Number of respondents"))
+>>>>>>> 90d44f6 (Update on paper)
 ```
 
 ### Happiness and income level
 
+<<<<<<< HEAD
 @fig-income presents the levels of happiness across different income groups. @tbl-income provides a breakdown of the total number of people in each income group who reported being in different levels of happiness. @fig-income visualizes these results and shows a
 clear trend.
+=======
+@fig-income presents a visualization of the levels of happiness across different income groups.
+>>>>>>> 90d44f6 (Update on paper)
 
 The data shows that, for most income groups, the highest number of respondents reported feeling "pretty happy" compared to the other two happiness levels. However, there were some exceptions. For individuals earning less than \$1000, their reported happiness levels tended to be more polarized towards "not so happy" and "very happy". Moreover, for those earning between \$6000 and \$6999, the majority reported being "very happy".
 
 Overall, the data suggests that, across income groups, respondents tended towards the "not so happy" level of happiness. However, it's worth noting that there were variations in happiness levels across different income groups.
 
+<<<<<<< HEAD
 ```{r, fig.pos="H"}
+=======
+```{r}
+>>>>>>> 90d44f6 (Update on paper)
 #| echo: false
 #| fig-width: 20
 #| fig-height: 15
@@ -273,9 +290,9 @@ cleaned_data_job  %>%  group_by(rincome) %>%
   geom_bar() +
   facet_wrap(~rincome, scales = "free") +
   theme_minimal() + 
-  labs(x = "Level of Happiness of Respondent", 
+  labs(x = "Level of Happiness", 
        y = "Number of Respondents",
-       title = "Relationship of Income Respondent and Happiness") + 
+       title = "Relationship of Income Level and Happiness") + 
   theme(legend.position = "none")
 ```
 
@@ -283,6 +300,14 @@ cleaned_data_job  %>%  group_by(rincome) %>%
 -   Only records that responded to all three variables of interest were kept when discovering the relationship between working conditions and happiness.
 - Omit NA for happiness
 
+
+Overall, the level of happiness among Americans is relatively high. We found no significant differences in the distribution of happiness levels across different age groups or races. However, males tended to report higher levels of happiness than females.
+
+In terms of working conditions, we observed that the mean hours worked per week were similar across all levels of happiness. We also found that individuals who responded to all the working condition questions tended to report feeling "pretty happy" across all happiness levels. Income levels did not have a significant impact on the reported levels of happiness.
+
+Our analysis has some limitations. Specifically, we only included respondents who answered all three questions (happiness, income, and working hours) when investigating the relationship between job conditions and happiness. Additionally, we excluded all respondents who did not answer the happiness level question, which may introduce a bias in our analysis. As a result, our research only covers those who are willing to respond to the questions and may not be representative of the broader population.
+
+It is important to note that our analysis is purely descriptive in nature and does not attempt to establish causality or estimate treatment effects. In the future, we plan to conduct inferential statistical analysis to further investigate the relationships between the factors we examined and happiness levels.
 
 ## Appendix
 
