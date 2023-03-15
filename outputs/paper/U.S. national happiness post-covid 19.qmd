@@ -99,7 +99,7 @@ cleaned_data_job$rincome <- factor(cleaned_data_job$rincome,
 Human beings strive for different things in life, but the ultimate goal is usually to achieve happiness. Happiness can be seen as a measure of life quality, and it is often associated with factors such as income, education, social interactions, and family. The relationship between happiness and age has been widely studied, and research suggests that there is not much change in happiness until around the age of 55, after which happiness starts to increase, peaking around 67, with a quite sharp decline around the age of 75 [@citeage]. Studies examining the relationship between gender and happiness have found that individuals in the United States were more than twice as likely to experience well-being in states with high gender equality scores compared to states with low gender equality scores [@citesex]. The relationship between race and happiness has also been studied, with research suggesting that the gap in happiness between whites and blacks is substantial, with whites more likely to report being very happy and less likely to report being not too happy [@citerace]. Several studies conducted in Europe
 suggest that working fewer hours is correlated with higher life satisfaction [@citehours]. Regarding income, studies have shown that the relationship between perceived sufficient income and happiness is mediated by perceived health. Individuals with sufficient income are more likely to have better perceived health, which leads to increased happiness [@citeincome].
 
-This paper delves into the complex relationship between age, gender, race, working hours, and income, and their impact on an individual's overall happiness. The findings reveal that while the level of happiness among various age groups remains stable, the 18-34 age group reported the highest level of extreme happiness. Additionally, the study suggests that male respondents tend to report higher levels of happiness compared to their female counterparts, whereas the level of happiness remains similar across different racial groups. \[insert something here\]
+This paper delves into the complex relationship between age, gender, race, working hours, and income, and their impact on an individual's overall happiness. The findings reveal that while the level of happiness among various age groups remains stable, the 18-34 age group reported the highest level of extreme happiness. Additionally, the study suggests that male respondents tend to report higher levels of happiness compared to their female counterparts, whereas the level of happiness remains similar across different racial groups. There is no significant difference in working hours and income level between different levels of happiness.
 
 The remainder of the paper is split into five sections. Section 2 explains the data source and collection methodology, key features, our selected data's characteristics, strengths and weakness, as well as potential ethics issues. Section 3 discusses the methods used to produce the wanted results to investigate the relationship between happiness and the various factors. Section 4 presents the findings from our methodology.
 
@@ -148,8 +148,14 @@ sumtable(sum_var_job, title = "A", out = "kable", simple.kable = TRUE)
 ```
 
 ### Strengths and Weaknesses
-- Too many people having high incomes ($25k above) -> should narrow down into smaller clusters
--   Subjective options for happiness level
+
+One strength of the 2021 GSS is that the use of mail-to-web methodology and phone options allowed for data collection to continue despite the COVID-19 pandemic and potential safety concerns. This approach allowed for a wider range of participants, including those who may have been hesitant or unable to participate in traditional in-person interviews. The use of commercial phone number matches also helped to ensure a representative sample, which is important for drawing accurate conclusions and generalizing findings to the broader population.
+
+Additionally, the fine-tuning of the recruitment protocol after each batch release is another strength of the 2021 GSS. This iterative process helped to improve the effectiveness of the data collection process and increase the likelihood of obtaining responses from a diverse group of individuals. By analyzing the results of each batch, the protocol was adjusted to better reach and engage potential respondents, ultimately resulting in a higher response rate and a more representative sample.
+
+One weakness of the 2021 GSS is the change in how survey questions were administered, which could have impacted the answers. Due to the COVID-19 pandemic, the survey needed to primarily administer questions over the web without an interviewer's assistance, resulting in some changes in how the questions were measured. For instance, the inclusion of "Don't Know" response categories was only for factual questions and not opinion questions, unlike in previous years where interviewers could record Don't Knows regardless of question type. Such changes could have introduced bias in the responses and affected the comparability of results across different years.
+
+Another weakness comes from the survey design. For example, the income distribution in the sample is skewed towards higher incomes with too many people having incomes above $25k. This could lead to inaccuracies in estimating the income distribution of the population as a whole. In addition, the subjective options for measuring happiness level in the survey could introduce bias and inaccuracies in the results. This is because people may have different interpretations of what constitutes "very happy" or "pretty happy," leading to inconsistent responses.
 
 
 ### Ethical Concerns & Limitations
@@ -158,7 +164,7 @@ The 2021 US General Social Survey has a few issues that should be considered. Si
 
 There are also ethical factors that should be taken into consideration. Regarding the race of respondents, there are only options for White, Black, and Others. Using "Others" option likely groups other racial identities, therefore could lead to interpretations not accurately capturing the current demographic. 
 
-The low response rate (17.4%) also heavily affects the final results, that it cannot generalize and reflect the whole population.
+The relatively low response rate of 17.4% may raise concerns about the representativeness of the sample. The reliance on self-selection by respondents may have introduced biases into the sample, as those who choose to participate may have different characteristics or opinions than those who do not. Additionally, the use of mail-based outreach may have led to some surveys being lost or ignored, potentially reducing the representativeness of the sample. Finally, the reliance on web-based responses may have excluded individuals who do not have access to or are not comfortable using the internet, further potentially reducing the representativeness of the sample.
 
 ## Discussion
 
@@ -252,11 +258,11 @@ by_race %>%
 
 ### Happiness and working hours
 
-<<<<<<< HEAD
+
 @tbl-hour shows the mean and standard deviation of working hours in different happiness level, as well as the total number of observation of each happiness level. Though the mean of working hours for the very happy group was slightly lower than the rest, there are no significant difference between different happy levels. In addition, it can be told from the standard deviation that the variability of working hours for the three groups are similar. However, it can be found that from people responded to all three questions (happiness, working hours and income level), the population of pretty happy group takes the majority of total number of observations.
 
 Table 1 shows the mean and standard deviation of working hours in different happiness level, as well as the number of respondents of each happiness level. Though the mean of working hours for the very happy group was slightly lower than the rest, the mean hours of people working in the week before they responded to the survey are similar in all levels of happiness, at around 40 hours per week. In addition, it can be told from the standard deviation that the variabilities of working hours for the three groups are similar. Interestingly, the "pretty happy" group had the largest number of observations among those who responded to all three questions (happiness, working hours, and income level).
->>>>>>> 90d44f6 (Update on paper)
+
 
 ```{r, tbl.pos="H"}
 #| echo: false
@@ -284,9 +290,6 @@ knitr::kable(hrs_happy,
 
 ### Happiness and income level
 
-
-@fig-income presents the levels of happiness across different income groups. @tbl-income provides a breakdown of the total number of people in each income group who reported being in different levels of happiness. @fig-income visualizes these results and shows a
-clear trend.
 
 @fig-income presents a visualization of the levels of happiness across different income groups.
 
