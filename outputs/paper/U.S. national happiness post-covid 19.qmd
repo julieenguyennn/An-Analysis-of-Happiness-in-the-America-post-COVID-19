@@ -116,8 +116,7 @@ The survey of interest in this report is the General Social Survey [@norc], one 
 
 Since its inception, the GSS has traditionally used in-person data collection as its primary mode of data collection. However, to safeguard the health of staff and respondents during the COVID-19 pandemic, the 2021 GSS data collection used a mail-to-web methodology (supplemented with phone for respondents who needed the option) instead of its traditional in-person interviews.
 
-Outreach was conducted via mail and phone using commercially available phone number matches for addresses in the sample or inbound phone contact. GSS staff redesigned the mail-based outreach to respondents to introduce the GSS to fresh address-based sample and encourage them to participate, either by web or over the phone. Throughout the data
-collection period, selected households were sent postcards, invitation packets, and reminder letters using a combination of USPS and FedEx and urging them to complete the 2021 GSS survey. The sample was released in three batches, with evaluation of respondent recruitment protocol for each batch allowing the fine-tuning of protocol for subsequent batches.
+Outreach was conducted via mail and phone using commercially available phone number matches for addresses in the sample or inbound phone contact. GSS staff redesigned the mail-based outreach to respondents to introduce the GSS to fresh address-based sample and encourage them to participate, either by web or over the phone. Throughout the data collection period, selected households were sent postcards, invitation packets, and reminder letters using a combination of USPS and FedEx and urging them to complete the 2021 GSS survey. The sample was released in three batches, with evaluation of respondent recruitment protocol for each batch allowing the fine-tuning of protocol for subsequent batches.
 
 With a response rate of 17.4%, a total of 4,032 surveys were completed; from December 1, 2020, to May 3, 2021. 88.3% of those respondents completed the survey via the web, and 11.7% completed it via the phone.
 
@@ -133,6 +132,21 @@ Happiness was self-measured by the respondents using the survey asking how happy
 
 Working hours refer to the hours the respondent had worked the week before they responded to the survey. Income of the respondent is also taken into account as we believe that it is an important factor in examining the happiness trend in overall and also act as a potential motive for happiness. Working hours. Income was divided into 12 levels, respectively lower then \$1000, \$1000 to 2999, \$3000 to 3999, \$4000 to 4999, \$5000 to 5999, \$6000 to 6999, \$7000 to \$7999, \$8000 to 9999, \$10000 to 14999, \$15000 to 19999, \$20000 to 24999 and more than \$25000. The respondents were asked to respond to which group their previous year's earnings fell into.
 
+```{r}
+sum_var <- raw_data %>% 
+  select(age, sex, race, happy)
+sum_var_job <- cleaned_data_job %>% 
+  select(hrs1, rincome)
+
+# summary table age
+sumtable(sum_var, title = "Summary table of age variable", out = 'kable', simple.kable = TRUE)
+```
+
+```{R}
+sumtable(sum_var_job, title = "A", out = "kable", simple.kable = TRUE)
+
+```
+
 ### Strengths and Weaknesses
 - Too many people having high incomes ($25k above) -> should narrow down into smaller clusters
 -   Subjective options for happiness level
@@ -142,9 +156,9 @@ Working hours refer to the hours the respondent had worked the week before they 
 
 The 2021 US General Social Survey has a few issues that should be considered. Since this is a voluntary survey, the appearance of non-sampling errors is inevitable. The type of non-sampling errors in the survey mostly falls into non-response error, where respondents left the answer blank or provide incomplete answers.
 
-There are also factors that should
-The lack of options for race. -> Ethics
+There are also ethical factors that should be taken into consideration. Regarding the race of respondents, there are only options for White, Black, and Others. Using "Others" option likely groups other racial identities, therefore could lead to interpretations not accurately capturing the current demographic. 
 
+The low response rate (17.4%) also heavily affects the final results, that it cannot generalize and reflect the whole population.
 
 ## Discussion
 
@@ -255,11 +269,18 @@ hrs_happy <- cleaned_data_job %>%
             Total_observed = n()) %>% ungroup()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 knitr::kable(hrs_happy)
 =======
 knitr::kable(hrs_happy,
              col.names = c("Happiness level", "Mean (hrs)", "Standard Deviation (hrs)", "Number of respondents"))
 >>>>>>> 90d44f6 (Update on paper)
+=======
+knitr::kable(hrs_happy,
+             align = c('l', 'c'),
+             booktabs = T) %>%
+    kable_styling(full_width = FALSE, latex_options = c("striped", "HOLD_position"))
+>>>>>>> 30a638ecf3c25c2d07bad4b2cd4d6e5250b61738
 ```
 
 ### Happiness and income level
