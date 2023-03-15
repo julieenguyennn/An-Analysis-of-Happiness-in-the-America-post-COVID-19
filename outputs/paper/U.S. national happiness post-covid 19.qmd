@@ -317,9 +317,6 @@ cleaned_data_job  %>%  group_by(rincome) %>%
 ```
 
 ## Conclusion
--   Only records that responded to all three variables of interest were kept when discovering the relationship between working conditions and happiness.
-- Omit NA for happiness
-
 
 Overall, the level of happiness among Americans is relatively high. We found no significant differences in the distribution of happiness levels across different age groups or races. However, males tended to report higher levels of happiness than females.
 

@@ -57,6 +57,8 @@ cleaned_data_job$rincome <- factor(cleaned_data_job$rincome,
                                               '$15000 TO 19999',
                                               '$20000 TO 24999',
                                               '$25000 OR MORE'))
+final_raw_data <- bind_rows(raw_data,raw_data_job)
+
 
 # Variables of interest
 
