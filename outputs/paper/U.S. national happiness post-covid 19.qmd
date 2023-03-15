@@ -254,7 +254,7 @@ by_race %>%
 
 <<<<<<< HEAD
 @tbl-hour shows the mean and standard deviation of working hours in different happiness level, as well as the total number of observation of each happiness level. Though the mean of working hours for the very happy group was slightly lower than the rest, there are no significant difference between different happy levels. In addition, it can be told from the standard deviation that the variability of working hours for the three groups are similar. However, it can be found that from people responded to all three questions (happiness, working hours and income level), the population of pretty happy group takes the majority of total number of observations.
-=======
+
 Table 1 shows the mean and standard deviation of working hours in different happiness level, as well as the number of respondents of each happiness level. Though the mean of working hours for the very happy group was slightly lower than the rest, the mean hours of people working in the week before they responded to the survey are similar in all levels of happiness, at around 40 hours per week. In addition, it can be told from the standard deviation that the variabilities of working hours for the three groups are similar. Interestingly, the "pretty happy" group had the largest number of observations among those who responded to all three questions (happiness, working hours, and income level).
 >>>>>>> 90d44f6 (Update on paper)
 
@@ -268,29 +268,28 @@ hrs_happy <- cleaned_data_job %>%
             Sd = sd(hrs1),
             Total_observed = n()) %>% ungroup()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 knitr::kable(hrs_happy)
-=======
+
 knitr::kable(hrs_happy,
              col.names = c("Happiness level", "Mean (hrs)", "Standard Deviation (hrs)", "Number of respondents"))
->>>>>>> 90d44f6 (Update on paper)
-=======
+
+
 knitr::kable(hrs_happy,
              align = c('l', 'c'),
              booktabs = T) %>%
     kable_styling(full_width = FALSE, latex_options = c("striped", "HOLD_position"))
->>>>>>> 30a638ecf3c25c2d07bad4b2cd4d6e5250b61738
+
 ```
 
 ### Happiness and income level
 
-<<<<<<< HEAD
+
 @fig-income presents the levels of happiness across different income groups. @tbl-income provides a breakdown of the total number of people in each income group who reported being in different levels of happiness. @fig-income visualizes these results and shows a
 clear trend.
-=======
+
 @fig-income presents a visualization of the levels of happiness across different income groups.
->>>>>>> 90d44f6 (Update on paper)
+
 
 The data shows that, for most income groups, the highest number of respondents reported feeling "pretty happy" compared to the other two happiness levels. However, there were some exceptions. For individuals earning less than \$1000, their reported happiness levels tended to be more polarized towards "not so happy" and "very happy". Moreover, for those earning between \$6000 and \$6999, the majority reported being "very happy".
 
