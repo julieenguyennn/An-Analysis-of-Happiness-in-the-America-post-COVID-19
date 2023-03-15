@@ -116,8 +116,7 @@ The survey of interest in this report is the General Social Survey [@norc], one 
 
 Since its inception, the GSS has traditionally used in-person data collection as its primary mode of data collection. However, to safeguard the health of staff and respondents during the COVID-19 pandemic, the 2021 GSS data collection used a mail-to-web methodology (supplemented with phone for respondents who needed the option) instead of its traditional in-person interviews.
 
-Outreach was conducted via mail and phone using commercially available phone number matches for addresses in the sample or inbound phone contact. GSS staff redesigned the mail-based outreach to respondents to introduce the GSS to fresh address-based sample and encourage them to participate, either by web or over the phone. Throughout the data
-collection period, selected households were sent postcards, invitation packets, and reminder letters using a combination of USPS and FedEx and urging them to complete the 2021 GSS survey. The sample was released in three batches, with evaluation of respondent recruitment protocol for each batch allowing the fine-tuning of protocol for subsequent batches.
+Outreach was conducted via mail and phone using commercially available phone number matches for addresses in the sample or inbound phone contact. GSS staff redesigned the mail-based outreach to respondents to introduce the GSS to fresh address-based sample and encourage them to participate, either by web or over the phone. Throughout the data collection period, selected households were sent postcards, invitation packets, and reminder letters using a combination of USPS and FedEx and urging them to complete the 2021 GSS survey. The sample was released in three batches, with evaluation of respondent recruitment protocol for each batch allowing the fine-tuning of protocol for subsequent batches.
 
 With a response rate of 17.4%, a total of 4,032 surveys were completed; from December 1, 2020, to May 3, 2021. 88.3% of those respondents completed the survey via the web, and 11.7% completed it via the phone.
 
@@ -142,8 +141,9 @@ Working hours refer to the hours the respondent had worked the week before they 
 
 The 2021 US General Social Survey has a few issues that should be considered. Since this is a voluntary survey, the appearance of non-sampling errors is inevitable. The type of non-sampling errors in the survey mostly falls into non-response error, where respondents left the answer blank or provide incomplete answers.
 
-There are also factors that should
-The lack of options for race. -> Ethics
+There are also ethical factors that should be taken into consideration. Regarding the race of respondents, there is only options for White, Black, and Others.
+
+The fact that being a voluntary survey is the limitation -> cannot generalize, hence not reflecting the whole population
 
 
 ## Discussion
