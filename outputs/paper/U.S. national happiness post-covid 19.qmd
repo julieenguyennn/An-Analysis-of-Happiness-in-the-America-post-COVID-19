@@ -135,12 +135,15 @@ Working hours refer to the hours the respondent had worked the week before they 
 
 ### Strengths and Weaknesses
 - Too many people having high incomes ($25k above) -> should narrow down into smaller clusters
+-   Subjective options for happiness level
+
 
 ### Ethical Concerns & Limitations
 
--   Subjective options for happiness level
--   Omit the NA answers in happiness
--   Only records that responded to all three variables of interest were kept when discovering the relationship between working conditions and happiness.
+The 2021 US General Social Survey has a few issues that should be considered. Non-sampling errors.
+
+There are also factors that shou
+
 
 
 ## Discussion
@@ -277,6 +280,9 @@ cleaned_data_job  %>%  group_by(rincome) %>%
 ```
 
 ## Conclusion
+-   Only records that responded to all three variables of interest were kept when discovering the relationship between working conditions and happiness.
+- Omit NA for happiness
+
 
 ## Appendix
 
