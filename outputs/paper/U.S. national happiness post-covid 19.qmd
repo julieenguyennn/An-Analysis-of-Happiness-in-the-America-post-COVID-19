@@ -132,6 +132,21 @@ Happiness was self-measured by the respondents using the survey asking how happy
 
 Working hours refer to the hours the respondent had worked the week before they responded to the survey. Income of the respondent is also taken into account as we believe that it is an important factor in examining the happiness trend in overall and also act as a potential motive for happiness. Working hours. Income was divided into 12 levels, respectively lower then \$1000, \$1000 to 2999, \$3000 to 3999, \$4000 to 4999, \$5000 to 5999, \$6000 to 6999, \$7000 to \$7999, \$8000 to 9999, \$10000 to 14999, \$15000 to 19999, \$20000 to 24999 and more than \$25000. The respondents were asked to respond to which group their previous year's earnings fell into.
 
+```{r}
+sum_var <- raw_data %>% 
+  select(age, sex, race, happy)
+sum_var_job <- cleaned_data_job %>% 
+  select(hrs1, rincome)
+
+# summary table age
+sumtable(sum_var, title = "Summary table of age variable", out = 'kable', simple.kable = TRUE)
+```
+
+```{R}
+sumtable(sum_var_job, title = "A", out = "kable", simple.kable = TRUE)
+
+```
+
 ### Strengths and Weaknesses
 - Too many people having high incomes ($25k above) -> should narrow down into smaller clusters
 -   Subjective options for happiness level
@@ -141,10 +156,9 @@ Working hours refer to the hours the respondent had worked the week before they 
 
 The 2021 US General Social Survey has a few issues that should be considered. Since this is a voluntary survey, the appearance of non-sampling errors is inevitable. The type of non-sampling errors in the survey mostly falls into non-response error, where respondents left the answer blank or provide incomplete answers.
 
-There are also ethical factors that should be taken into consideration. Regarding the race of respondents, there is only options for White, Black, and Others.
+There are also ethical factors that should be taken into consideration. Regarding the race of respondents, there are only options for White, Black, and Others. Using "Others" option likely groups other racial identities, therefore could lead to interpretations not accurately capturing the current demographic. 
 
-The fact that being a voluntary survey is the limitation -> cannot generalize, hence not reflecting the whole population
-
+The low response rate (17.4%) also heavily affects the final results, that it cannot generalize and reflect the whole population.
 
 ## Discussion
 
@@ -250,7 +264,10 @@ hrs_happy <- cleaned_data_job %>%
             Sd = sd(hrs1),
             Total_observed = n()) %>% ungroup()
 
-knitr::kable(hrs_happy)
+knitr::kable(hrs_happy,
+             align = c('l', 'c'),
+             booktabs = T) %>%
+    kable_styling(full_width = FALSE, latex_options = c("striped", "HOLD_position"))
 ```
 
 ### Happiness and income level

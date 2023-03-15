@@ -26,10 +26,33 @@ cleaned_data <- raw_data %>%
   )) %>% 
   filter(!is.na(happy))
 
+cleaned_data_job <- raw_data_job %>% 
+  filter(!str_detect(hrs1, '.i'), !str_detect(hrs1, '.n'), 
+         !str_detect(hrs1, '.d'), !str_detect(hrs1, '.s'),
+         !str_detect(rincome, '.i'), !str_detect(rincome, '.n'), 
+         !str_detect(rincome, '.d'), !str_detect(rincome, '.s'),
+         !str_detect(rincome, '.r'), !str_detect(happy, '.i'),
+         !str_detect(happy, '.n'), !str_detect(happy, '.d'),
+         !str_detect(happy, '.s'))
+cleaned_data_job$rincome <- sub("-","TO",cleaned_data_job$rincome)
+cleaned_data_job$rincome <- sub("LT","LOWER THEN ",cleaned_data_job$rincome)
+cleaned_data_job$hrs1 <- as.numeric(cleaned_data_job$hrs1)
+cleaned_data_job$rincome <- factor(cleaned_data_job$rincome,
+                                   levels = c('LOWER THEN  $1000',
+                                              '$1000 TO 2999',
+                                              '$3000 TO 3999',
+                                              '$4000 TO 4999',
+                                              '$5000 TO 5999',
+                                              '$6000 TO 6999',
+                                              '$7000 TO 7999',
+                                              '$8000 TO 9999',
+                                              '$10000 TO 14999',
+                                              '$15000 TO 19999',
+                                              '$20000 TO 24999',
+                                              '$25000 OR MORE'))
+
 # Variables of interest
-var <- cleaned_data %>% 
-  mutate('Age' = age, 'Sex' = sex, 'Race' = race, 'Happy' = happy)
-sumtable(var, title = 'U.S. happiness in 2021', out = 'kable', simple.kable = TRUE)
+
 
 # Overall national happiness
 overall_hp <- cleaned_data %>% 
