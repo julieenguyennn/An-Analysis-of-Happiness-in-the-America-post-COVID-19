@@ -1,3 +1,10 @@
+#### Preamble ####
+# Purpose: Cleaning the data from GSS 2021 and extract what needed
+# Author: Missy Zhang, Julie Nguyen, Linrong Li
+# Data: 7 March 2023
+# Contact: mengze.zhang@mail.utoronto.ca
+# License: MIT
+
 library(tidyverse)
 library(readr)
 library(dplyr)
