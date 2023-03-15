@@ -296,11 +296,8 @@ The data shows that, for most income groups, the highest number of respondents r
 
 Overall, the data suggests that, across income groups, respondents tended towards the "not so happy" level of happiness. However, it's worth noting that there were variations in happiness levels across different income groups.
 
-<<<<<<< HEAD
+
 ```{r, fig.pos="H"}
-=======
-```{r}
->>>>>>> 90d44f6 (Update on paper)
 #| echo: false
 #| fig-width: 20
 #| fig-height: 15
