@@ -1,5 +1,5 @@
 ---
-title: "U.S. national happiness post-covid"
+title: "An Analysis of Happiness in the U.S. post-COVID-19"
 author: "Julie Nguyen, Missy Zhang, Linrong Li"
 date: "`r Sys.time()`"
 date-format: "D MMMM YYYY"
@@ -85,7 +85,7 @@ cleaned_job$rincome <- factor(cleaned_job$rincome,
 Human beings strive for different things in life, but the ultimate goal is usually to achieve happiness. Happiness can be seen as a measure of life quality, and it is often associated with factors such as income, education, social interactions, and family. The relationship between happiness and age has been widely studied, and research suggests that there is not much change in happiness until around the age of 55, after which happiness starts to increase, peaking around 67, with a quite sharp decline around the age of 75 [@citeage]. Studies examining the relationship between gender and happiness have found that individuals in the United States were more than twice as likely to experience well-being in states with high gender equality scores compared to states with low gender equality scores [@citesex]. The relationship between race and happiness has also been studied, with research suggesting that the gap in happiness between whites and blacks is substantial, with whites more likely to report being very happy and less likely to report being not too happy [@citerace]. Several studies conducted in Europe
 suggest that working fewer hours is correlated with higher life satisfaction [@citehours]. Regarding income, studies have shown that the relationship between perceived sufficient income and happiness is mediated by perceived health. Individuals with sufficient income are more likely to have better perceived health, which leads to increased happiness [@citeincome].
 
-This paper delves into the complex relationship between age, gender, race, working hours, and income, and their impact on an individual's overall happiness. The findings reveal that while the level of happiness among various age groups remains stable, the 18-34 age group reported the highest level of extreme happiness. Additionally, the study suggests that male respondents tend to report higher levels of happiness compared to their female counterparts, whereas the level of happiness remains similar across different racial groups. There is no significant difference in working hours and income level between different levels of happiness.
+This paper delves into the complex relationship between age, gender, race, working hours, and income, and their impact on an individual's overall happiness. The findings reveal that the level of happiness among various age groups has similar patterns. Additionally, the study suggests that male respondents tend to report higher levels of happiness compared to their female counterparts, whereas the level of happiness remains similar across different racial groups. There is no significant difference in working hours and income level between different levels of happiness.
 
 The remainder of the paper is split into five sections. Section 2 explains the data source and collection methodology, key features, our selected data's characteristics, strengths and weakness, as well as potential ethics issues. Section 3 discusses the methods used to produce the wanted results to investigate the relationship between happiness and the various factors. Section 4 presents the findings from our methodology.
 
@@ -115,7 +115,7 @@ The GSS collects data on contemporary American society to monitor and explain tr
 
 Happiness was self-measured by the respondents using the survey asking how happy they felt. It is scaled as "not too happy", "pretty happy", "very happy". Any type of responses that fell into "Inapplicable", "No Answer", "Do not Know/Cannot Choose", "Skipped on Web" were coded as "Non Applicable". Age of respondents was recorded each from 18 to 88 years old, and 89 and above. The participant's sex was measured as "male" and "female" with a small percentage (2.2%) of "Not Applicable" and "No answer". For variable regarding race, the survey separated the options for response as "Black", "White", and "Other". Only about 1.33% of the respondents left their answers as "Non Applicable".
 
-Working hours refer to the hours the respondent had worked the week before they responded to the survey. Income of the respondent is also taken into account as we believe that it is an important factor in examining the happiness trend in overall and also act as a potential motive for happiness. Working hours. Income was divided into 12 levels, respectively lower then \$1000, \$1000 to 2999, \$3000 to 3999, \$4000 to 4999, \$5000 to 5999, \$6000 to 6999, \$7000 to \$7999, \$8000 to 9999, \$10000 to 14999, \$15000 to 19999, \$20000 to 24999 and more than \$25000. The respondents were asked to respond to which group their previous year's earnings fell into.
+Working hours refer to the hours the respondent had worked the week before they responded to the survey. Income of the respondent is also taken into account as we believe that it is an important factor in examining the happiness trend in overall and also act as a potential motive for happiness. Income was divided into 12 levels, respectively lower then \$1000, \$1000 to 2999, \$3000 to 3999, \$4000 to 4999, \$5000 to 5999, \$6000 to 6999, \$7000 to \$7999, \$8000 to 9999, \$10000 to 14999, \$15000 to 19999, \$20000 to 24999 and more than \$25000. The respondents were asked to respond to which group their previous year's earnings fell into.
 
 ### Strengths and Weaknesses
 
@@ -309,6 +309,7 @@ sumtable(sum_table, title = "The 2021 GSS summary statistics", out = 'kable', si
   kable_styling(full_width = FALSE, latex_options = c("striped", "HOLD_position"))
 ```
 
+Our supplementary survey is available here: [https://forms.gle/a7Fx9B1CC9os51yA9](https://forms.gle/a7Fx9B1CC9os51yA9)
 
 \newpage
 
