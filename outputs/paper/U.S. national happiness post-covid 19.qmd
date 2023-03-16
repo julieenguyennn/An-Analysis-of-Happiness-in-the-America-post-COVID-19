@@ -302,6 +302,8 @@ It is important to note that our analysis is purely descriptive in nature and do
 
 
 ```{R}
+#|label: tbl-summary
+
 sum_table <- raw_data %>% 
   select(sex, race, happy)
 
