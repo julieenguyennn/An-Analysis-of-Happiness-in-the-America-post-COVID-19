@@ -8,7 +8,7 @@ This repository explores the US GSS 2021 data to better understand factors that 
 
 1. Inputs
 
-* In this folder, you will find GSS 2021 raw data.
+* In this folder, you will find GSS 2021 raw data, and screenshots of our additional survey.
 
 2. Scripts
 
