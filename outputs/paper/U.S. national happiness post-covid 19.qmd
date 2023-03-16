@@ -298,7 +298,11 @@ Our analysis has some limitations. Specifically, we only included respondents wh
 
 It is important to note that our analysis is purely descriptive in nature and does not attempt to establish causality or estimate treatment effects. In the future, we plan to conduct inferential statistical analysis to further investigate the relationships between the factors we examined and happiness levels.
 
+\newpage
+
 ## Appendix
+
+### Statistics summary
 
 
 ```{R}
@@ -311,7 +315,33 @@ sumtable(sum_table, title = "The 2021 GSS summary statistics", out = 'kable', si
   kable_styling(full_width = FALSE, latex_options = c("striped", "HOLD_position"))
 ```
 
+
+### Supplementary survey
+
 Our supplementary survey is available here: [https://forms.gle/a7Fx9B1CC9os51yA9](https://forms.gle/a7Fx9B1CC9os51yA9)
+
+The following images show the screenshots of the online survey form:
+
+```{r}
+knitr::include_graphics('../../inputs/additional_survey/survey_Page_1.png')
+```
+
+```{r}
+knitr::include_graphics('../../inputs/additional_survey/survey_Page_2.png')
+```
+
+```{r}
+knitr::include_graphics('../../inputs/additional_survey/survey_Page_3.png')
+```
+
+```{r}
+knitr::include_graphics('../../inputs/additional_survey/survey_Page_4.png')
+```
+
+```{r}
+knitr::include_graphics('../../inputs/additional_survey/survey_Page_5.png')
+```
+
 
 \newpage
 
