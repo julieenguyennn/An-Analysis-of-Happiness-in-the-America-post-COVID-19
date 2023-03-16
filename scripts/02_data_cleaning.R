@@ -6,34 +6,18 @@
 # License: MIT
 
 library(tidyverse)
-library(readr)
+library(readxl)
 library(dplyr)
 library(kableExtra)
 library(vtable)
+library(naniar)
 
-# Clean and recode data
-cleaned_data <- raw_data %>% 
-  select(age, race, sex, happy) %>% 
-  arrange(age) %>% 
-  mutate(age = case_when(
-    age < 18 ~ '< 18',
-    age >= 18 & age <= 34 ~ '18-34',
-    age >= 35 & age <=49 ~ '35-49',
-    age >= 50 & age <=64 ~ '50-64',
-    age >= 65 & age <=89 ~ '65 and above'
-  )) %>% 
-  mutate(sex = case_when(
-    sex == 1 ~ 'Male',
-    sex == 2 ~ 'Female'
-  )) %>% 
-  mutate(race = case_when(
-    race == 1 ~ 'White',
-    race == 2 ~ 'Black',
-    race == 3 ~ 'Other'
-  )) %>% 
-  filter(!is.na(happy))
+# Read inputs
+raw_data <- read_excel(here::here("inputs/data/GSS.xlsx"))
 
-cleaned_data_job <- raw_data_job %>% 
+# Clean and recode data related to jobs/income
+cleaned_job <- raw_data %>%
+  select(hrs1, rincome, happy) %>% 
   filter(!str_detect(hrs1, '.i'), !str_detect(hrs1, '.n'), 
          !str_detect(hrs1, '.d'), !str_detect(hrs1, '.s'),
          !str_detect(rincome, '.i'), !str_detect(rincome, '.n'), 
@@ -41,10 +25,21 @@ cleaned_data_job <- raw_data_job %>%
          !str_detect(rincome, '.r'), !str_detect(happy, '.i'),
          !str_detect(happy, '.n'), !str_detect(happy, '.d'),
          !str_detect(happy, '.s'))
-cleaned_data_job$rincome <- sub("-","TO",cleaned_data_job$rincome)
-cleaned_data_job$rincome <- sub("LT","LOWER THEN ",cleaned_data_job$rincome)
-cleaned_data_job$hrs1 <- as.numeric(cleaned_data_job$hrs1)
-cleaned_data_job$rincome <- factor(cleaned_data_job$rincome,
+
+# Clean and recode general data
+cleaned_overall <- raw_data %>%
+  select(age, sex, race, happy) %>% 
+  mutate(age = replace(age, str_detect(age, '.i'), NA),
+         age = replace(age, str_detect(age, '.n'), NA),
+         sex = replace(sex, str_detect(sex, '.n'), NA),
+         race = replace(race, str_detect(race, '.i'), NA),
+         happy = replace(happy, str_detect(happy, '.i'), NA),
+         happy = replace(happy, str_detect(happy, '.n'), NA))
+  
+cleaned_job$rincome <- sub("-","TO",cleaned_job$rincome)
+cleaned_job$rincome <- sub("LT","LOWER THEN ",cleaned_job$rincome)
+cleaned_job$hrs1 <- as.numeric(cleaned_job$hrs1)
+cleaned_job$rincome <- factor(cleaned_job$rincome,
                                    levels = c('LOWER THEN  $1000',
                                               '$1000 TO 2999',
                                               '$3000 TO 3999',
@@ -57,11 +52,10 @@ cleaned_data_job$rincome <- factor(cleaned_data_job$rincome,
                                               '$15000 TO 19999',
                                               '$20000 TO 24999',
                                               '$25000 OR MORE'))
-final_raw_data <- bind_rows(raw_data,raw_data_job)
 
 
 # Variables of interest
-
+sumtable(cleaned_job, title = "Summary table for working hours and income", out = 'kable', simple.kable = TRUE)
 
 # Overall national happiness
 overall_hp <- cleaned_data %>% 

@@ -23,52 +23,19 @@ execute:
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
-library(dplyr)
-library(haven)
-library(janitor)
 library(tidyverse)
-library(knitr)
-library(vtable)
-library(kableExtra)
-library(readr)
-library(ggplot2)
-library(here)
 library(readxl)
-library(stringr)
-library(labelled)
+library(dplyr)
+library(kableExtra)
+library(vtable)
+library(naniar)
 
-raw_data <- haven::read_dta("../../inputs/data/gss2021.dta")
-raw_data_job <- read_excel(here::here("inputs/job_happy/GSS.xlsx"))
+# Read inputs
+raw_data <- read_excel(here::here("inputs/data/GSS.xlsx"))
 
-# Clean and recode data
-cleaned_data <- raw_data %>% 
-  select(age, race, sex, happy) %>% 
-  arrange(age) %>% 
-  mutate(age = case_when(
-    age < 18 ~ '< 18',
-    age >= 18 & age <= 34 ~ '18-34',
-    age >= 35 & age <=49 ~ '35-49',
-    age >= 50 & age <=64 ~ '50-64',
-    age >= 65 & age <=89 ~ '65 and above'
-  )) %>% 
-  mutate(sex = case_when(
-    sex == 1 ~ 'Male',
-    sex == 2 ~ 'Female'
-  )) %>% 
-  mutate(race = case_when(
-    race == 1 ~ 'White',
-    race == 2 ~ 'Black',
-    race == 3 ~ 'Other'
-  )) %>% 
-  mutate(happy = case_when(
-    happy == 1 ~ 'Very Happy',
-    happy == 2 ~ 'Pretty Happy',
-    happy == 3 ~ 'Not Too Happy'
-  )) %>% 
-  filter(!is.na(happy))
-
-# Remove Inapplicable, Dont know, no answer, refused and skipped
-cleaned_data_job <- raw_data_job %>% 
+# Clean and recode data related to jobs/income
+cleaned_job <- raw_data %>%
+  select(hrs1, rincome, happy) %>% 
   filter(!str_detect(hrs1, '.i'), !str_detect(hrs1, '.n'), 
          !str_detect(hrs1, '.d'), !str_detect(hrs1, '.s'),
          !str_detect(rincome, '.i'), !str_detect(rincome, '.n'), 
@@ -76,22 +43,41 @@ cleaned_data_job <- raw_data_job %>%
          !str_detect(rincome, '.r'), !str_detect(happy, '.i'),
          !str_detect(happy, '.n'), !str_detect(happy, '.d'),
          !str_detect(happy, '.s'))
-cleaned_data_job$rincome <- sub("-","TO",cleaned_data_job$rincome)
-cleaned_data_job$rincome <- sub("LT","LOWER THEN ",cleaned_data_job$rincome)
-cleaned_data_job$hrs1 <- as.numeric(cleaned_data_job$hrs1)
-cleaned_data_job$rincome <- factor(cleaned_data_job$rincome,
-                             levels = c('LOWER THEN  $1000',
-                                        '$1000 TO 2999',
-                                        '$3000 TO 3999',
-                                        '$4000 TO 4999',
-                                        '$5000 TO 5999',
-                                        '$6000 TO 6999',
-                                        '$7000 TO 7999',
-                                        '$8000 TO 9999',
-                                        '$10000 TO 14999',
-                                        '$15000 TO 19999',
-                                        '$20000 TO 24999',
-                                        '$25000 OR MORE'))
+
+# Clean and recode general data
+cleaned_overall <- raw_data %>%
+  select(age, sex, race, happy) %>% 
+  mutate(age = replace(age, str_detect(age, '.i'), NA),
+         age = replace(age, str_detect(age, '.n'), NA),
+         sex = replace(sex, str_detect(sex, '.n'), NA),
+         race = replace(race, str_detect(race, '.i:  Inapplicable'), NA),
+         happy = replace(happy, str_detect(happy, '.i'), NA),
+         happy = replace(happy, str_detect(happy, '.n'), NA),
+         age = case_when(
+           age >= 18 & age <= 29 ~ '18-29',
+           age >= 30 & age <=39~ '30-39',
+           age >= 40 & age <=49~ '40-49',
+           age >= 50 & age <=64~ '50-64',
+           age >= 65 & age <=89~ '65-89'
+  )) %>% 
+  filter(!is.na(happy))
+  
+cleaned_job$rincome <- sub("-","TO",cleaned_job$rincome)
+cleaned_job$rincome <- sub("LT","LOWER THEN ",cleaned_job$rincome)
+cleaned_job$hrs1 <- as.numeric(cleaned_job$hrs1)
+cleaned_job$rincome <- factor(cleaned_job$rincome,
+                                   levels = c('LOWER THEN  $1000',
+                                              '$1000 TO 2999',
+                                              '$3000 TO 3999',
+                                              '$4000 TO 4999',
+                                              '$5000 TO 5999',
+                                              '$6000 TO 6999',
+                                              '$7000 TO 7999',
+                                              '$8000 TO 9999',
+                                              '$10000 TO 14999',
+                                              '$15000 TO 19999',
+                                              '$20000 TO 24999',
+                                              '$25000 OR MORE'))
 ```
 
 ## Introduction
@@ -107,8 +93,7 @@ The remainder of the paper is split into five sections. Section 2 explains the d
 
 ### Data Source and Collection
 
-To get better insights on what factors affect happiness, we utilized the 2021 US General Social Survey [@norc] from NORC. The raw dataset is a Stata file and was imported in R using the package Haven [@haven]. It includes data from 568 survey questions for 4,032 survey participants. Using the R [@citeR] package tidyverse [@tidyverse] and dplyr [@dplyr], we were able to clean and perform exploratory data analysis on the dataset to get insights into the data. Further, we used R package ggplot2 [@ggplot2], Knitr [@knitr] and KableExtra [@kbextra] to visualize the data for this paper. The dataset used to explore the relationship between working conditions and happiness was directly extracted from the GSS Data Explorer website (<https://gssdataexplorer.norc.org/home>). All the interested variables were first selected from the website and then added to an extract, which was later exported in the Excel Workbook format. This dataset is saved
-in the job_happy folder inside the input folder. The R package readxl [@readxl] was used to read the Excel Workbook file in R.
+To get better insights on what factors affect happiness, we utilized the 2021 US General Social Survey [@norc] from NORC. The raw dataset is extracted from the survey and was imported in R using the package Haven [@haven]. It includes data from 568 survey questions for 4,032 survey participants. Using the R [@citeR] package tidyverse [@tidyverse] and dplyr [@dplyr], we were able to clean and perform exploratory data analysis on the dataset to get insights into the data. Further, we used R package ggplot2 [@ggplot2], Knitr [@knitr] and KableExtra [@kbextra] to visualize the data for this paper. The dataset used to explore the overall understanding of happiness in age, sex, and racial groups, as well as the relationship between working conditions and happiness was directly extracted from the GSS Data Explorer website (<https://gssdataexplorer.norc.org/home>). All the interested variables were first selected from the website and then added to an extract, which was later exported in the Excel Workbook format. The R package readxl [@readxl] was used to read the Excel Workbook file in R.
 
 The survey of interest in this report is the General Social Survey [@norc], one that monitors pubic opinion and behavior in the United States. It has been conducted since 1972 by the NORC at the University of Chicago and funded by the National Science Foundation(NSF); aiming to minimize all changes via retaining similar sampling and questioning approaches. In each round, the GSS contains a set of repeating modules and a section of topical modules that is subject to change in every round and each participant will be given a subset of repeating modules and topical modules (it may not contain all modules).
 
@@ -131,21 +116,6 @@ The GSS collects data on contemporary American society to monitor and explain tr
 Happiness was self-measured by the respondents using the survey asking how happy they felt. It is scaled as "not too happy", "pretty happy", "very happy". Any type of responses that fell into "Inapplicable", "No Answer", "Do not Know/Cannot Choose", "Skipped on Web" were coded as "Non Applicable". Age of respondents was recorded each from 18 to 88 years old, and 89 and above. The participant's sex was measured as "male" and "female" with a small percentage (2.2%) of "Not Applicable" and "No answer". For variable regarding race, the survey separated the options for response as "Black", "White", and "Other". Only about 1.33% of the respondents left their answers as "Non Applicable".
 
 Working hours refer to the hours the respondent had worked the week before they responded to the survey. Income of the respondent is also taken into account as we believe that it is an important factor in examining the happiness trend in overall and also act as a potential motive for happiness. Working hours. Income was divided into 12 levels, respectively lower then \$1000, \$1000 to 2999, \$3000 to 3999, \$4000 to 4999, \$5000 to 5999, \$6000 to 6999, \$7000 to \$7999, \$8000 to 9999, \$10000 to 14999, \$15000 to 19999, \$20000 to 24999 and more than \$25000. The respondents were asked to respond to which group their previous year's earnings fell into.
-
-```{r}
-sum_var <- raw_data %>% 
-  select(age, sex, race, happy)
-sum_var_job <- cleaned_data_job %>% 
-  select(hrs1, rincome)
-
-# summary table age
-sumtable(sum_var, title = "Summary table of age variable", out = 'kable', simple.kable = TRUE)
-```
-
-```{R}
-sumtable(sum_var_job, title = "A", out = "kable", simple.kable = TRUE)
-
-```
 
 ### Strengths and Weaknesses
 
@@ -172,17 +142,28 @@ In order to understand the context and trends, we observed the overall trend of 
 
 ### National Happiness
 
-Overall, the level of happiness in the United States in 2021 is relatively high. [@fig-overallhp] shows that among 4041 respondents, the majority of them (3118 or 77.2%) reported that they feel happy, while 923 people were not happy. While the number of people who reported feeling very happy is relatively low compared to those who reported feeling pretty happy, it still suggests that there is a sizeable portion of the population that is experiencing high levels of happiness. Conversely, the fact that a significant number of respondents reported not feeling happy highlights the importance of addressing mental health and well-being in the United States.
+Overall, the level of happiness in the United States in 2021 is relatively high. [@fig-overallhp] and [@tbl-overallhp] shows that among 4041 respondents, 77.5% reported that they feel happy and very happy, while 22.3% people were not happy. While the number of people who reported feeling very happy is relatively low compared to those who reported feeling pretty happy, it still suggests that there is a sizeable portion of the population that is experiencing high levels of happiness. Conversely, the fact that a significant number of respondents reported not feeling happy highlights the importance of addressing mental health and well-being in the United States.
 
 ```{r, fig.pos="H"}
-#| label: fig-overallhp
-#| fig-cap: "National Happiness"
-overall_hp <- cleaned_data %>% 
+#| label: tbl-overallhp
+#| tbl-cap: "The national happiness of the U.S. in 2021"
+overall_hp <- cleaned_overall %>% 
   group_by(happy) %>% 
   count(happy)
-overall_hp <- overall_hp %>% mutate(proportion = n/sum(n)*100)
 
-cleaned_data %>% ggplot(aes(happy, fill = happy)) +
+overall_hp <- mutate(overall_hp, proportion = n/sum(923,2308,783)*100)
+
+knitr::kable(overall_hp,
+             align = c('l', 'c'),
+             booktabs = T) %>%
+    kable_styling(full_width = FALSE, latex_options = c("striped", "HOLD_position"))
+```
+ 
+```{r, fig.pos="H"}
+#| label: fig-overallhp
+#| fig-cap: "The national happiness of the U.S. in 2021"
+
+cleaned_overall %>% ggplot(aes(happy, fill = happy)) +
   geom_bar() +
   theme_minimal() +
   labs(x = "Level of Happiness",
@@ -196,10 +177,10 @@ Comparing happiness among different age groups, it is apparent that the level of
 
 ```{r, fig.pos="H"}
 #| label: fig-age
-#| fig-cap: "Happiness by age"
-#| 
+#| fig-cap: "Happiness by age in 2021"
+
 # Happiness by age group
-by_age <- cleaned_data %>% 
+by_age <- cleaned_overall %>% 
   group_by(age) %>% 
   count(happy) 
 
@@ -214,14 +195,14 @@ by_age %>%
 
 ### Happiness among male, female, and others
 
-@fig-bysex shows that male tend to be more happy than female \[more elaboration is needed here about why male are more happy than female\]. In the year 2021, the U.S. population reported to relatively happy among different sex groups. There is a great disparity between female respondents feeling unhappy and very happy - more female experienced unhappiness than very happy, while that of male respondents is quite similar. In addition, there are 92 people who responded their level of happiness without identifying their sex. In this group, there are 62 respondents feel happy, 18 respondents feel very happy, and 12 respondents feel unhappy.
+@fig-bysex shows that male tend to be more happy than female. In the year 2021, the U.S. population reported to be relatively happy among different sex groups. There is a great disparity between female respondents feeling unhappy and very happy - more female experienced unhappiness than very happy, while that of male respondents is quite similar. In addition, there are 92 people who responded their level of happiness without identifying their sex. In this group, there are 62 respondents feel happy, 18 respondents feel very happy, and 12 respondents feel unhappy.
 
 ```{r, fig.pos="H"}
 #| label: fig-bysex
 #| fig-cap: "Happiness by sex in 2021"
 
 # Happiness by sex
-by_sex <- cleaned_data %>% 
+by_sex <- cleaned_overall %>% 
   group_by(sex) %>% 
   count(happy) 
 
@@ -236,14 +217,14 @@ by_sex %>%
 
 ### Happiness among different races
 
-As a multicultural country, happiness in different races is also worth observing as it shows the level of happiness in different racial communities. From @fig-race We notice that there is a similar pattern between the black and white racial groups, and between other races and non-identifiable group. \[which is?\]
+As a multicultural country, happiness in different races is also worth observing as it shows the level of happiness in different racial communities. From @fig-race, we notice that there is a similar pattern between the black and white racial groups, and between other races and non-identifiable group. While in people belonged to black and white racial groups felt more unhappy, whom of the other groups showed a contrasting behavior. There are 28.6% of black respondents and 22.7% of the white population feeling unhappy, while that of other races and unidentifiable racial groups took up 18.2% and 14.8% respectively.
 
 ```{r, fig.pos="H"}
 #| label: fig-race
-#| fig-cap: "Happiness by race"
+#| fig-cap: "Happiness by race in 2021"
 
 # Happiness by race
-by_race <- cleaned_data %>% 
+by_race <- cleaned_overall %>% 
   group_by(race) %>% 
   count(happy) 
 
@@ -258,30 +239,21 @@ by_race %>%
 
 ### Happiness and working hours
 
-
-@tbl-hour shows the mean and standard deviation of working hours in different happiness level, as well as the total number of observation of each happiness level. Though the mean of working hours for the very happy group was slightly lower than the rest, there are no significant difference between different happy levels. In addition, it can be told from the standard deviation that the variability of working hours for the three groups are similar. However, it can be found that from people responded to all three questions (happiness, working hours and income level), the population of pretty happy group takes the majority of total number of observations.
-
-Table 1 shows the mean and standard deviation of working hours in different happiness level, as well as the number of respondents of each happiness level. Though the mean of working hours for the very happy group was slightly lower than the rest, the mean hours of people working in the week before they responded to the survey are similar in all levels of happiness, at around 40 hours per week. In addition, it can be told from the standard deviation that the variabilities of working hours for the three groups are similar. Interestingly, the "pretty happy" group had the largest number of observations among those who responded to all three questions (happiness, working hours, and income level).
+@tbl-hour shows the mean and standard deviation of working hours in different happiness level, as well as the number of respondents of each happiness level. Though the mean of working hours for the very happy group was slightly lower than the rest, the mean hours of people working in the week before they responded to the survey are similar in all levels of happiness, at around 40 hours per week. In addition, it can be told from the standard deviation that the variability of working hours for the three groups are similar. Interestingly, the "pretty happy" group had the largest number of observations among those who responded to all three questions (happiness, working hours, and income level).
 
 
 ```{r, tbl.pos="H"}
 #| echo: false
 #| label: tbl-hour
-#| tbl-cap: The means of hours worked last week in different levels of happiness
-hrs_happy <- cleaned_data_job %>% 
+#| tbl-cap: "The means of hours worked last week in different levels of happiness"
+hrs_happy <- cleaned_job %>% 
   group_by(happy) %>% 
   summarize(Mean = mean(hrs1),
             Sd = sd(hrs1),
             Total_observed = n()) %>% ungroup()
 
-
-knitr::kable(hrs_happy)
-
 knitr::kable(hrs_happy,
-             col.names = c("Happiness level", "Mean (hrs)", "Standard Deviation (hrs)", "Number of respondents"))
-
-
-knitr::kable(hrs_happy,
+             col.names = c("Happiness level", "Mean (hrs)", "Standard Deviation (hrs)", "Number of respondents"),
              align = c('l', 'c'),
              booktabs = T) %>%
     kable_styling(full_width = FALSE, latex_options = c("striped", "HOLD_position"))
@@ -305,7 +277,7 @@ Overall, the data suggests that, across income groups, respondents tended toward
 #| fig-height: 15
 #| label: fig-income
 #| fig-cap: Relationship of income level and happiness
-cleaned_data_job  %>%  group_by(rincome) %>% 
+cleaned_job  %>%  group_by(rincome) %>% 
   ggplot(aes(x = happy, fill = rincome)) + 
   geom_bar() +
   facet_wrap(~rincome, scales = "free") +
@@ -327,6 +299,16 @@ Our analysis has some limitations. Specifically, we only included respondents wh
 It is important to note that our analysis is purely descriptive in nature and does not attempt to establish causality or estimate treatment effects. In the future, we plan to conduct inferential statistical analysis to further investigate the relationships between the factors we examined and happiness levels.
 
 ## Appendix
+
+
+```{R}
+sum_table <- raw_data %>% 
+  select(sex, race, happy)
+
+sumtable(sum_table, title = "The 2021 GSS summary statistics", out = 'kable', simple.kable = TRUE) %>% 
+  kable_styling(full_width = FALSE, latex_options = c("striped", "HOLD_position"))
+```
+
 
 \newpage
 
