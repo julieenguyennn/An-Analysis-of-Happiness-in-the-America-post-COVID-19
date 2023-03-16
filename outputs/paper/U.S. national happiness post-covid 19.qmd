@@ -10,7 +10,7 @@ format:
     geometry: margin = 1in
     mainfont: "Garamond"
     sansfont: "Garamond"
-thanks: 'Code and data are available at: '
+thanks: "Code and data are available at: https://github.com/julieenguyennn/An-Analysis-of-Happiness-in-the-America-post-COVID-19"
 abstract: "This study investigates the level of happiness in the U.S. in 2021 and explores potential factors that may influence it. Using data from the 2021 US General Social Survey, we conducted a thorough analysis and found that the overall level of happiness in the U.S. is relatively high, albeit with slight variations under different conditions. Our study also includes an updated version of the survey in the Appendix to further discover our points of interest. By researching the happiness level in the U.S. and its potential determinants, our research contributes to a deeper understanding of the psychological and social well-being of Americans in 2021."
 bibliography: reference.bib
 number-sections: true
@@ -93,9 +93,9 @@ The remainder of the paper is split into five sections. Section 2 explains the d
 
 ### Data Source and Collection
 
-To get better insights on what factors affect happiness, we utilized the 2021 US General Social Survey [@norc] from NORC. The raw dataset is extracted from the survey and was imported in R using the package Haven [@haven]. It includes data from 568 survey questions for 4,032 survey participants. Using the R [@citeR] package tidyverse [@tidyverse] and dplyr [@dplyr], we were able to clean and perform exploratory data analysis on the dataset to get insights into the data. Further, we used R package ggplot2 [@ggplot2], Knitr [@knitr] and KableExtra [@kbextra] to visualize the data for this paper. The dataset used to explore the overall understanding of happiness in age, sex, and racial groups, as well as the relationship between working conditions and happiness was directly extracted from the GSS Data Explorer website (<https://gssdataexplorer.norc.org/home>). All the interested variables were first selected from the website and then added to an extract, which was later exported in the Excel Workbook format. The R package readxl [@readxl] was used to read the Excel Workbook file in R.
+To get better insights on what factors affect happiness, we utilized the 2021 US General Social Survey [@norc] from NORC. The raw dataset is extracted from the survey and was imported in R [@citeR] using the package Haven [@haven]. It includes data from 568 survey questions for 4,032 survey participants. All the interested variables were first selected from NORC and then added to an extract, which was later exported in the Excel Workbook format. The R package readxl [@readxl] was used to read the Excel Workbook file in R. Using the R package tidyverse [@tidyverse] and dplyr [@dplyr], we were able to clean and perform exploratory data analysis on the dataset to get insights into the data. Further, we used R package ggplot2 [@ggplot2], Knitr [@knitr] and KableExtra [@kbextra] to visualize the data for this paper. 
 
-The survey of interest in this report is the General Social Survey [@norc], one that monitors pubic opinion and behavior in the United States. It has been conducted since 1972 by the NORC at the University of Chicago and funded by the National Science Foundation(NSF); aiming to minimize all changes via retaining similar sampling and questioning approaches. In each round, the GSS contains a set of repeating modules and a section of topical modules that is subject to change in every round and each participant will be given a subset of repeating modules and topical modules (it may not contain all modules).
+The survey of interest in this report is the General Social Survey [@norc], one that monitors pubic opinion and behavior in the United States. It has been conducted since 1972 by the NORC at the University of Chicago and funded by the National Science Foundation(NSF); aiming to minimize all changes via retaining similar sampling and questioning approaches. 
 
 ### Methodology
 
@@ -268,7 +268,7 @@ knitr::kable(hrs_happy,
 
 The data shows that, for most income groups, the highest number of respondents reported feeling "pretty happy" compared to the other two happiness levels. However, there were some exceptions. For individuals earning less than \$1000, their reported happiness levels tended to be more polarized towards "not so happy" and "very happy". Moreover, for those earning between \$6000 and \$6999, the majority reported being "very happy".
 
-Overall, the data suggests that, across income groups, respondents tended towards the "not so happy" level of happiness. However, it's worth noting that there were variations in happiness levels across different income groups.
+Overall, the data suggests that, across income groups, respondents tended towards the "pretty happy" level of happiness. However, it's worth noting that there were variations in happiness levels across different income groups.
 
 
 ```{r, fig.pos="H"}
